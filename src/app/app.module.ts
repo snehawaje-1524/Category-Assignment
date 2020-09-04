@@ -1,18 +1,43 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LandingComponent } from './components/landing/landing.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AuthService } from './services/auth.service';
+import { AuthEffects } from './store/effects/auth.effects';
+import { reducers } from './store/app.states';
+import { OfferService } from './services/offer.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LandingComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AuthEffects]),
+    RouterModule.forRoot([
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: '', component: LandingComponent },
+      { path: '**', redirectTo: '/' },
+    ])
   ],
-  providers: [],
+  providers: [AuthService, OfferService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

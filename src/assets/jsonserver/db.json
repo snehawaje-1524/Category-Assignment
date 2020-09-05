@@ -20,27 +20,6 @@
             "category": "App Offer"
         }
     ],
-    "categories": [{
-            "id": 1,
-            "title": "Myntra",
-            "description": "Apply code to avail offer"
-        },
-        {
-            "id": 2,
-            "title": "Amazon",
-            "description": "Login through mobile app to avail offer"
-        },
-        {
-            "id": 3,
-            "title": "Myntra",
-            "description": "Apply code to avail offer"
-        },
-        {
-            "id": 4,
-            "title": "Amazon",
-            "description": "Login through mobile app to avail offer"
-        }
-    ],
     "users": [{
             "username": "test@gmail.com",
             "password": "test"

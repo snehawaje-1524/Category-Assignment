@@ -26,13 +26,13 @@ export class RegisterComponent implements OnInit {
     this.getState.subscribe((state) => {
       this.errorMessage = state.errorMessage;
     });
+    this.errorMessage = null;
   }
 
   onSubmit(): void {
     const payload = {
       email: this.user.email,
       password: this.user.password,
-      // id: Math.random() * 100
     };
     this.store.dispatch(new Register(payload));
   }

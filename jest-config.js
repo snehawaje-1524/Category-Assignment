@@ -13,6 +13,7 @@ module.exports = {
         "<rootDir>/node_modules/",
         "<rootDir>/dist/",
         "<rootDir>/cypress/",
-        "<rootDir>/src/test.ts",
-    ]
+        "<rootDir>/src/test.ts"
+    ],
+    "moduleFileExtensions":  ["ts",  "tsx",  "js",  "jsx",  "json",  "node"]
 };

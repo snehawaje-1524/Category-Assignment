@@ -10,7 +10,6 @@ import {
     Register, RegisterSuccess, RegisterFailure,
     LogOut,
 } from '../actions/auth.actions';
-import { User } from 'src/app/models/user';
 
 @Injectable()
 export class AuthEffects {

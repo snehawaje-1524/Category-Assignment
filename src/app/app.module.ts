@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -15,25 +15,33 @@ import { AuthService } from './services/auth.service';
 import { AuthEffects } from './store/effects/auth.effects';
 import { reducers } from './store/app.states';
 import { OfferService } from './services/offer.service';
+import { AddOfferComponent } from './components/add-offer/add-offer.component';
+import { EditOfferComponent } from './components/edit-offer/edit-offer.component';
+import { OfferEffects } from './offer-store/effects/offer.effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     LandingComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AddOfferComponent,
+    EditOfferComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, OfferEffects]),
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: '', component: LandingComponent },
+      { path: 'add-offer', component: AddOfferComponent },
+      { path: 'edit-offer', component: EditOfferComponent },
       { path: '**', redirectTo: '/' },
     ])
   ],

@@ -16,12 +16,14 @@
                 <label for="password">Password</label>
                 <input [(ngModel)]="user.password" name="password" type="password" required class="form-control" id="password" placeholder="enter a password">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a [routerLink]="['/']" class="btn btn-success">Cancel</a>
+            <div>
+                <button type="submit" class="action-button submit">Submit</button>
+                <button type="cancel" class="action-button cancel" [routerLink]="['/']">Cancel</button>
+            </div>
         </form>
         <p>
             <span>Already have an account?&nbsp;</span>
-            <a [routerLink]="['/log-in']">Log in!</a>
+            <a [routerLink]="['/login']">Log in!</a>
         </p>
     </div>
 </div>

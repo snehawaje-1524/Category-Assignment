@@ -1,34 +1,32 @@
 <div class="row">
     <div class="col-md-4">
         <h1>Shopping Offers</h1>
+        <h5>Welcome to the world of offers!</h5>
         <hr><br>
         <div *ngIf="isAuthenticated; then doSomething; else doSomethingElse;"></div>
         <ng-template #doSomething>
             <p>You logged in <em>{{user.email}}!</em></p>
-            <button class="btn btn-primary" (click)="logOut()">Log out</button>
+            <button (click)="logOut()">Log out</button>
         </ng-template>
         <ng-template #doSomethingElse>
             <div class="logindiv">
-                <button class="buttons">
-                    <a [routerLink]="['/login']" class="btn btn-primary">Log In</a>
-                </button>
-                <button class="buttons">
-                    <a [routerLink]="['/register']" class="btn btn-primary">Register</a>
-                </button>
+                <button [routerLink]="['/login']" class="action-button">Log In</button>
+                <button [routerLink]="['/register']" class="action-button">Register</button>
             </div>
         </ng-template>
     </div>
 </div>
 
-<!-- <div class="col-md-6 offer-container">
+<div class="col-md-6 offer-container">
     <h2 style="margin: auto"> Offer Details</h2>
-    <button class="btn btn-danger" style="width:100px" (click)="addOffer()"> Add Offer</button>
-    <table class="table table-striped">
+    <button *ngIf="isAuthenticated" class="action-button" style="width:100px" (click)="addOffer()"> Add Offer</button>
+    <table class="table table-striped" id="offerTable">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Title</th>
                 <th>Category</th>
+                <th *ngIf="isAuthenticated">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -36,10 +34,10 @@
                 <td>{{offer.id}}</td>
                 <td>{{offer.title}}</td>
                 <td>{{offer.category}}</td>
-                <td><button class="btn btn-success" (click)="deleteOffer(offer)"> Delete</button>
-                    <button class="btn btn-success" (click)="editOffer(offer)" style="margin-left: 20px;"> Edit</button>
+                <td *ngIf="isAuthenticated"><button class="action-button" (click)="deleteOffer(offer)"> Delete</button>
+                    <button class="action-button" (click)="editOffer(offer)" style="margin-left: 20px;"> Edit</button>
                 </td>
             </tr>
         </tbody>
     </table>
-</div> -->
+</div>

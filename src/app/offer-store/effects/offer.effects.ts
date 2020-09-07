@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { OfferService } from '../../services/offer.service';
 import {
-    OfferActionTypes, GetOffer, LoadOffersSuccess, AddOffersSuccess, AddOffer, UpdateOffer,
-    UpdateOffersSuccess, DeleteOffer, DeleteOffersSuccess,
+    GetOffer, LoadOffersSuccess, AddOffersSuccess, AddOffer, UpdateOffer,
+    UpdateOffersSuccess, DeleteOffer, DeleteOffersSuccess, GET_OFFER, ADD_OFFER, UPDATE_OFFER, DELETE_OFFER,
 } from '../actions/offer.actions';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class OfferEffects {
 
     @Effect({ dispatch: true })
     GetOffer: Observable<any> = this.actions.pipe(
-        ofType(OfferActionTypes.GET_OFFER),
+        ofType(GET_OFFER),
         map((action: GetOffer) => action),
         mergeMap(payload => {
             return this.offerService.getOffers().pipe(
@@ -25,7 +25,7 @@ export class OfferEffects {
 
     @Effect({ dispatch: true })
     AddOffer: Observable<any> = this.actions.pipe(
-        ofType(OfferActionTypes.ADD_OFFER),
+        ofType(ADD_OFFER),
         map((action: AddOffer) => action.payload),
         mergeMap(payload => {
             return this.offerService.createOffer(payload).pipe(
@@ -39,7 +39,7 @@ export class OfferEffects {
 
     @Effect({ dispatch: true })
     UpdateOffer: Observable<any> = this.actions.pipe(
-        ofType(OfferActionTypes.UPDATE_OFFER),
+        ofType(UPDATE_OFFER),
         map((action: UpdateOffer) => action.payload),
         mergeMap(payload => {
             return this.offerService.updateOffer(payload.index, payload.newOffer).pipe(
@@ -53,7 +53,7 @@ export class OfferEffects {
 
     @Effect({ dispatch: true })
     DeleteOffer: Observable<any> = this.actions.pipe(
-        ofType(OfferActionTypes.DELETE_OFFER),
+        ofType(DELETE_OFFER),
         map((action: DeleteOffer) => action.payload),
         mergeMap(payload => {
             return this.offerService.deleteOffer(payload).pipe(

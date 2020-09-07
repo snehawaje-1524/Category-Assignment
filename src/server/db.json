@@ -1,0 +1,46 @@
+{
+  "offers": [
+    {
+      "id": 1,
+      "title": "Grab It!",
+      "category": "App Offer"
+    },
+    {
+      "id": 2,
+      "title": "Buy 1 Get 1",
+      "category": "App Offer"
+    },
+    {
+      "id": 3,
+      "title": "Free Shipping",
+      "category": "New User"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "test@gmail.com",
+      "password": "test"
+    },
+    {
+      "email": "aa@gmail.com",
+      "password": "aa",
+      "id": 2
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "test",
+      "id": 3
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "jkghbj",
+      "id": 4
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "sdcsdx",
+      "id": 5
+    }
+  ]
+}

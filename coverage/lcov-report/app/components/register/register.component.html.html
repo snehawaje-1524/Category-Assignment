@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -14,49 +15,48 @@
         }
     </style>
 </head>
-
+    
 <body>
-    <div class='wrapper'>
-        <div class='pad1'>
-            <h1><a href="../../../index.html">All files</a> / <a href="index.html">app/components/register</a> register.component.html
-            </h1>
-            <div class='clearfix'>
-
-                <div class='fl pad1y space-right2'>
-                    <span class="strong">100% </span>
-                    <span class="quiet">Statements</span>
-                    <span class='fraction'>1/1</span>
-                </div>
-
-
-                <div class='fl pad1y space-right2'>
-                    <span class="strong">100% </span>
-                    <span class="quiet">Branches</span>
-                    <span class='fraction'>0/0</span>
-                </div>
-
-
-                <div class='fl pad1y space-right2'>
-                    <span class="strong">100% </span>
-                    <span class="quiet">Functions</span>
-                    <span class='fraction'>0/0</span>
-                </div>
-
-
-                <div class='fl pad1y space-right2'>
-                    <span class="strong">100% </span>
-                    <span class="quiet">Lines</span>
-                    <span class='fraction'>1/1</span>
-                </div>
-
-
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">app/components/register</a> register.component.html</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>1/1</span>
             </div>
-            <p class="quiet">
-                Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-            </p>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>1/1</span>
+            </div>
+        
+            
         </div>
-        <div class='status-line high'></div>
-        <pre><table class="coverage">
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+    </div>
+    <div class='status-line high'></div>
+    <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -113,8 +113,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;div class="row"&gt;
-    &lt;div class="col-md-4"&gt;
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;div&gt;
+    &lt;div&gt;
         &lt;h1&gt;Register&lt;/h1&gt;
         &lt;hr&gt;&lt;br&gt;
         &lt;div *ngIf="errorMessage"&gt;
@@ -122,48 +122,43 @@
                 {{errorMessage}}
             &lt;/div&gt;
         &lt;/div&gt;
-        &lt;form (ngSubmit)="onSubmit()" ngNativeValidate&gt;
+        &lt;form (ngSubmit)="onSubmit()" ngNativeValidate class="registerForm"&gt;
             &lt;div class="form-group"&gt;
                 &lt;label for="email"&gt;Email&lt;/label&gt;
-                &lt;input [(ngModel)]="user.email" name="email" type="email" required class="form-control" id="email" placeholder="enter your email"&gt;
+                &lt;input tabindex="1" [(ngModel)]="user.email" name="email" type="email" required class="form-control" id="email" placeholder="enter your email"&gt;
             &lt;/div&gt;
             &lt;div class="form-group"&gt;
                 &lt;label for="password"&gt;Password&lt;/label&gt;
-                &lt;input [(ngModel)]="user.password" name="password" type="password" required class="form-control" id="password" placeholder="enter a password"&gt;
+                &lt;input tabindex="2" [(ngModel)]="user.password" name="password" type="password" required class="form-control" id="password" placeholder="enter a password"&gt;
             &lt;/div&gt;
             &lt;div&gt;
-                &lt;button type="submit" class="action-button submit"&gt;Submit&lt;/button&gt;
-                &lt;button type="cancel" class="action-button cancel" [routerLink]="['/']"&gt;Cancel&lt;/button&gt;
+                &lt;button tabindex="3" aria-label="Submit" type="submit" class="action-button submit"&gt;Submit&lt;/button&gt;
+                &lt;button tabindex="4" aria-label="Cancel" type="cancel" class="action-button cancel" [routerLink]="['/']"&gt;Cancel&lt;/button&gt;
             &lt;/div&gt;
         &lt;/form&gt;
         &lt;p&gt;
             &lt;span&gt;Already have an account?&amp;nbsp;&lt;/span&gt;
-            &lt;a [routerLink]="['/login']"&gt;Log in!&lt;/a&gt;
+            &lt;a tabindex="5" [routerLink]="['/login']"&gt;Log in!&lt;/a&gt;
         &lt;/p&gt;
     &lt;/div&gt;
-&lt;/div&gt;</pre>
-        </td>
-        </tr>
-        </table>
-        </pre>
+&lt;/div&gt;</pre></td></tr></table></pre>
 
-        <div class='push'></div>
-        <!-- for sticky footer -->
-    </div>
-    <!-- /wrapper -->
-    <div class='footer quiet pad2 space-top1 center small'>
-        Code coverage generated by
-        <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Sep 05 2020 21:40:31 GMT+0530 (India Standard Time)
-    </div>
-    </div>
-    <script src="../../../prettify.js"></script>
-    <script>
-        window.onload = function() {
-            prettyPrint();
-        };
-    </script>
-    <script src="../../../sorter.js"></script>
-    <script src="../../../block-navigation.js"></script>
-</body>
-
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Mon Sep 07 2020 22:58:15 GMT+0530 (India Standard Time)
+            </div>
+        </div>
+        <script src="../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../sorter.js"></script>
+        <script src="../../../block-navigation.js"></script>
+    </body>
 </html>
+    

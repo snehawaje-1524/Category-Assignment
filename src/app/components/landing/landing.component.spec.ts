@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { LandingComponent } from './landing.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -8,9 +9,10 @@ describe('LandingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingComponent ]
-    })
-    .compileComponents();
+      declarations: [LandingComponent],
+      imports: [RouterTestingModule],
+      providers: [provideMockStore()]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -20,6 +22,8 @@ describe('LandingComponent', () => {
   });
 
   it('should create', () => {
+    fixture = TestBed.createComponent(LandingComponent);
+    component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

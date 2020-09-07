@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.58% </span>
+                <span class="strong">52.38% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/19</span>
+                <span class='fraction'>11/21</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.53% </span>
+                <span class="strong">47.37% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/17</span>
+                <span class='fraction'>9/19</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -118,26 +118,22 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -147,7 +143,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,6 +151,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -184,14 +188,15 @@ import { HttpClient } from '@angular/common/http';
 import { Offer } from '../models/offer.model';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 &nbsp;
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
 &nbsp;
-<span class="fstat-no" title="function not covered" >  constructor(private <span class="cstat-no" title="statement not covered" >h</span>ttp: HttpClient)</span> { }
-<span class="cstat-no" title="statement not covered" >  baseUrl = 'http://localhost:3000/offers/';</span>
+  constructor(private http: HttpClient) { }
+  baseUrl = environment.baseURL + 'offers/';
 &nbsp;
 <span class="fstat-no" title="function not covered" >  getOffers(</span>): Observable&lt;Offer[]&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.http.get&lt;Offer[]&gt;(this.baseUrl).pipe(</span>
@@ -200,8 +205,8 @@ export class OfferService {
     );
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  getOfferById(</span>id: number): Observable&lt;Offer&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.http.get&lt;Offer&gt;(this.baseUrl + id).pipe(</span>
+  getOfferById(id: number): Observable&lt;Offer&gt; {
+    return this.http.get&lt;Offer&gt;(this.baseUrl + id).pipe(
       retry(1),
       catchError(this.handleError)
     );
@@ -214,12 +219,13 @@ export class OfferService {
     );
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  updateOffer(</span>offer: Offer): Observable&lt;Offer&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.http.put&lt;Offer&gt;(this.baseUrl + offer.id, offer).pipe(</span>
+<span class="fstat-no" title="function not covered" >  updateOffer(</span>offerId: number, offer: Offer): Observable&lt;Offer&gt; {
+<span class="cstat-no" title="statement not covered" >    return this.http.put&lt;Offer&gt;(this.baseUrl + offerId, offer).pipe(</span>
       retry(1),
       catchError(this.handleError)
     );
   }
+&nbsp;
 &nbsp;
 <span class="fstat-no" title="function not covered" >  deleteOffer(</span>id: number): Observable&lt;Offer&gt; {
 <span class="cstat-no" title="statement not covered" >    return this.http.delete&lt;Offer&gt;(this.baseUrl + id).pipe(</span>
@@ -247,7 +253,7 @@ export class OfferService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sat Sep 05 2020 21:40:31 GMT+0530 (India Standard Time)
+                at Mon Sep 07 2020 22:58:15 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

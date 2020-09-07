@@ -10,7 +10,6 @@ Object.defineProperty(window, 'getComputedStyle', {
   },
 });
 
-
 Object.defineProperty(document, 'doctype', {
   value: '<!DOCTYPE html>',
 });

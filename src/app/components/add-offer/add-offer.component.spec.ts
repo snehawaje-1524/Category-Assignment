@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddOfferComponent } from './add-offer.component';
 import { StoreModule } from '@ngrx/store';
 import * as offer from '../../offer-store/reducers/offer.reducers';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-import { OfferService } from 'src/app/services/offer.service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { provideMockStore } from '@ngrx/store/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddOfferComponent', () => {
   let component: AddOfferComponent;
@@ -13,22 +13,20 @@ describe('AddOfferComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AddOfferComponent],
-      imports: [StoreModule.forRoot({ offer: offer.reducer }), ReactiveFormsModule],
-      providers: [Router, FormBuilder, OfferService],
+      imports: [RouterTestingModule, StoreModule.forRoot({ offer: offer.reducer }), ReactiveFormsModule, FormsModule],
+      providers: [provideMockStore()]
     }).compileComponents();
-
-    fixture = TestBed.createComponent(AddOfferComponent);
-    component = fixture.debugElement.componentInstance;
-    fixture.detectChanges();
   }));
 
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(AddOfferComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AddOfferComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should create add component', () => {
+    fixture = TestBed.createComponent(AddOfferComponent);
+    component = fixture.componentInstance;
     expect(component).toBeTruthy();
   });
 });

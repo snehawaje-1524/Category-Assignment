@@ -1,76 +1,66 @@
 import { Offer } from '../../models/offer.model';
-import { OfferActionTypes, All } from '../actions/offer.actions';
+import { All, GET_OFFER, LOAD_OFFER, ADD_OFFER, ADD_SUCCESS, UPDATE_OFFER, UPDATE_SUCCESS, DELETE_OFFER, DELETE_SUCCESS } from '../actions/offer.actions';
 
 export interface State {
     offer: Offer[];
-    added: boolean | null;
-    updated: boolean | null;
-    deleted: boolean | null;
-    loaded: boolean | null;
+    success: boolean | null;
     message: string | null;
 }
 
 export const initialState: State = {
     offer: [],
     message: null,
-    added: null,
-    updated: null,
-    loaded: null,
-    deleted: null
+    success: null
 };
 
 export function reducer(state = initialState, action: All): State {
     switch (action.type) {
-        case OfferActionTypes.GET_OFFER: {
+        case GET_OFFER: {
             return {
                 ...state,
             };
         }
-        case OfferActionTypes.LOAD_OFFER: {
+        case LOAD_OFFER: {
             return {
                 ...state,
                 offer: action.payload,
                 message: null,
-                loaded: true
             };
         }
-        case OfferActionTypes.ADD_OFFER: {
+        case ADD_OFFER: {
             return {
                 ...state
             };
 
         }
-        case OfferActionTypes.ADD_SUCCESS: {
+        case ADD_SUCCESS: {
             return {
                 ...state,
                 message: 'Offer added successfully!',
-                added: true
             };
         }
-        case OfferActionTypes.UPDATE_OFFER: {
+        case UPDATE_OFFER: {
             return {
                 ...state
             };
 
         }
-        case OfferActionTypes.UPDATE_SUCCESS: {
+        case UPDATE_SUCCESS: {
             return {
                 ...state,
                 message: 'Offer updated successfully!',
-                updated: true
             };
         }
-        case OfferActionTypes.DELETE_OFFER: {
+        case DELETE_OFFER: {
             return {
                 ...state
             };
 
         }
-        case OfferActionTypes.DELETE_SUCCESS: {
+        case DELETE_SUCCESS: {
             return {
                 ...state,
                 message: 'Offer deleted successfully!',
-                deleted: true
             };
         }
         default: {

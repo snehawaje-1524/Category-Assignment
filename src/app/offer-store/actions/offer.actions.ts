@@ -1,54 +1,53 @@
 import { Action } from '@ngrx/store';
 import { Offer } from 'src/app/models/offer.model';
 
-export enum OfferActionTypes {
-    GET_OFFER = '[Offer] Get Offer',
-    ADD_OFFER = '[Offer] Add Offer',
-    UPDATE_OFFER = '[Offer] Update Offer',
-    DELETE_OFFER = '[Offer] Delete Offer',
-    LOAD_OFFER = '[Offer] Load Offer',
-    ADD_SUCCESS = '[Offer] Add Success',
-    UPDATE_SUCCESS = '[Offer] Update Success',
-    DELETE_SUCCESS = '[Offer] Delete Success',
-}
+export const GET_OFFER = '[Offer] Get Offer';
+export const ADD_OFFER = '[Offer] Add Offer';
+export const UPDATE_OFFER = '[Offer] Update Offer';
+export const DELETE_OFFER = '[Offer] Delete Offer';
+export const LOAD_OFFER = '[Offer] Load Offer';
+export const ADD_SUCCESS = '[Offer] Add Success';
+export const UPDATE_SUCCESS = '[Offer] Update Success';
+export const DELETE_SUCCESS = '[Offer] Delete Success';
+
 
 export class GetOffer implements Action {
-    readonly type = OfferActionTypes.GET_OFFER;
+    readonly type = GET_OFFER;
     constructor() { }
 }
 
 export class AddOffer implements Action {
-    readonly type = OfferActionTypes.ADD_OFFER;
+    readonly type = ADD_OFFER;
     constructor(public payload: Offer) { }
 }
 
 export class UpdateOffer implements Action {
-    readonly type = OfferActionTypes.UPDATE_OFFER;
+    readonly type = UPDATE_OFFER;
     constructor(public payload: { index: number; newOffer: Offer }) { }
 }
 
 export class DeleteOffer implements Action {
-    readonly type = OfferActionTypes.DELETE_OFFER;
+    readonly type = DELETE_OFFER;
     constructor(public payload: number) { }
 }
 
 export class LoadOffersSuccess implements Action {
-    readonly type = OfferActionTypes.LOAD_OFFER;
+    readonly type = LOAD_OFFER;
     constructor(public payload: Offer[]) { }
 }
 
 export class AddOffersSuccess implements Action {
-    readonly type = OfferActionTypes.ADD_SUCCESS;
+    readonly type = ADD_SUCCESS;
     constructor(public payload: Offer) { }
 }
 
 export class UpdateOffersSuccess implements Action {
-    readonly type = OfferActionTypes.UPDATE_SUCCESS;
+    readonly type = UPDATE_SUCCESS;
     constructor(public payload: Offer) { }
 }
 
 export class DeleteOffersSuccess implements Action {
-    readonly type = OfferActionTypes.DELETE_SUCCESS;
+    readonly type = DELETE_SUCCESS;
     constructor() { }
 }
 

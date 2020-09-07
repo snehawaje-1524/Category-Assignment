@@ -18,7 +18,7 @@ export class AddOfferComponent implements OnInit {
   offer: Offer = new Offer();
   getState: Observable<any>;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private offerService: OfferService,
+  constructor(private formBuilder: FormBuilder, private router: Router,
     // tslint:disable-next-line: align
     private store: Store<AppState>) {
     this.getState = this.store.select(selectAuthState);

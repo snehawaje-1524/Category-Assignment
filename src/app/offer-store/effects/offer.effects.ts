@@ -42,7 +42,7 @@ export class OfferEffects {
         ofType(OfferActionTypes.UPDATE_OFFER),
         map((action: UpdateOffer) => action.payload),
         mergeMap(payload => {
-            return this.offerService.updateOffer(payload).pipe(
+            return this.offerService.updateOffer(payload.index, payload.newOffer).pipe(
                 map((data) => {
                     if (data) {
                         // tslint:disable-next-line: no-unused-expression

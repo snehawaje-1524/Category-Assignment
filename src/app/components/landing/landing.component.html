@@ -1,43 +1,48 @@
-<div class="row">
-    <div class="col-md-4">
+<div>
+    <div [ngClass]="isDarktheme ? 'dark' : 'light'">
         <h1>Shopping Offers</h1>
         <h5>Welcome to the world of offers!</h5>
+        <button class="action-button toggleButton" (click)="toggleTheme()">Toggle Theme</button>
         <hr><br>
         <div *ngIf="isAuthenticated; then doSomething; else doSomethingElse;"></div>
         <ng-template #doSomething>
             <p>You logged in <em>{{user.email}}!</em></p>
-            <button (click)="logOut()">Log out</button>
+            <button tabindex="4" aria-label="Logout" class="action-button" (click)="logOut()">Log out</button>
         </ng-template>
         <ng-template #doSomethingElse>
             <div class="logindiv">
-                <button [routerLink]="['/login']" class="action-button">Log In</button>
-                <button [routerLink]="['/register']" class="action-button">Register</button>
+                <button tabindex="1" aria-label="Login" [routerLink]="['/login']" class="action-button">Log
+                    In</button>
+                <button tabindex="2" aria-label="Register" [routerLink]="['/register']" class="action-button">Register</button>
             </div>
         </ng-template>
     </div>
-</div>
 
-<div class="col-md-6 offer-container">
-    <h2 style="margin: auto"> Offer Details</h2>
-    <button *ngIf="isAuthenticated" class="action-button" style="width:100px" (click)="addOffer()"> Add Offer</button>
-    <table class="table table-striped" id="offerTable">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th *ngIf="isAuthenticated">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let offer of offers">
-                <td>{{offer.id}}</td>
-                <td>{{offer.title}}</td>
-                <td>{{offer.category}}</td>
-                <td *ngIf="isAuthenticated"><button class="action-button" (click)="deleteOffer(offer)"> Delete</button>
-                    <button class="action-button" (click)="editOffer(offer)" style="margin-left: 20px;"> Edit</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="offer-container">
+        <h2> Offer Details</h2>
+        <button tabindex="3" aria-label="AddOffer" class="action-button" *ngIf="isAuthenticated" [routerLink]="['add-offer']">Add Offer</button>
+        <table class="table table-striped" id="offerTable" [ngClass]="isDarktheme ? 'dark' : 'light'">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th *ngIf="isAuthenticated">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let offer of offers">
+                    <td tabindex="0">{{offer.id}}</td>
+                    <td tabindex="0">{{offer.title}}</td>
+                    <td tabindex="0">{{offer.category}}</td>
+                    <td *ngIf="isAuthenticated"><button tabindex="0" aria-label="Delete" class="action-button" (click)="deleteOffer(offer)">
+                            Delete</button>
+                        <button tabindex="0" aria-label="Edit" class="action-button" [routerLink]="['/offers/', offer.id, 'edit-offer']">
+                            Edit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>

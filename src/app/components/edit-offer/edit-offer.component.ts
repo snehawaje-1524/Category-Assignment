@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { first } from 'rxjs/operators';
 import { OfferService } from 'src/app/services/offer.service';
 import { Offer } from 'src/app/models/offer.model';
-import { UpdateOffer } from 'src/app/offer-store/actions/offer.actions';
+import { UpdateOffer, GetOffer } from 'src/app/offer-store/actions/offer.actions';
 import { Observable } from 'rxjs';
 import { selectAuthState, AppState } from 'src/app/store/app.states';
 import { Store } from '@ngrx/store';
@@ -18,34 +17,38 @@ export class EditOfferComponent implements OnInit {
   offer: Offer;
   editForm: FormGroup;
   getState: Observable<any>;
+  offerId: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private offerService: OfferService,
-    private store: Store<AppState>) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
+    private offerService: OfferService, private store: Store<AppState>) {
     this.getState = this.store.select(selectAuthState);
   }
 
   ngOnInit() {
-    let offerId = window.localStorage.getItem('editOfferId');
-    if (!offerId) {
-      alert('Invalid action.')
-      this.router.navigate(['']);
-      return;
-    }
+    // tslint:disable-next-line: prefer-const
+    this.offerId = this.route.snapshot.params.offerId;
+    this.offerService.getOfferById(this.offerId).subscribe((data: Offer) => {
+      this.offer = data;
+    });
+
     this.editForm = this.formBuilder.group({
       id: [],
       title: [''],
       category: ['']
     });
-    this.offerService.getOfferById(+offerId)
-      .subscribe(offers => {
-        this.editForm.setValue(offers);
+    this.offerService.getOfferById(+this.offerId)
+      .subscribe(data => {
+        this.editForm.setValue(data);
       });
   }
 
   onSubmit() {
-    this.store.dispatch(new UpdateOffer(this.editForm.value));
-    this.store.subscribe(data => {
-      this.router.navigate(['']);
-    });
+    const payload = {
+      index: this.offerId,
+      newOffer: this.editForm.value,
+    };
+    this.store.dispatch(new UpdateOffer(payload));
+    this.store.dispatch(new GetOffer());
+    this.router.navigateByUrl('/');
   }
 }

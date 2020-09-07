@@ -1,14 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 h1,
+h2,
 h5 {
     text-align: center;
     font: Arial;
+    margin: 5px 0px 5px 25px;
 }
 
 .action-button {
     padding: 10px;
-    margin: 0px 25px 0px 0px;
+    margin: 0px 25px 0px 25px;
     color: #015BA5;
     border: 1px solid #015BA5;
     border-radius: 6px;
@@ -19,4 +21,49 @@ label,
 span,
 a {
     font: normal 12px/14px Arial;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 0 auto;
+}
+
+table td,
+table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table th,
+table td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+.dark {
+    @import './themes/dark.scss';
+    background-color: $background-color;
+    .action-button {
+        background: $basic-background;
+        color: $basic-text;
+    }
+    table th td {
+        background-color: $basic-background;
+        color: $basic-text;
+    }
+}
+
+.light {
+    @import './themes/light.scss';
+    background-color: $background-color;
+    .action-button {
+        background: $basic-background;
+        color: $basic-text;
+    }
+    table th td {
+        background-color: $basic-background;
+        color: $basic-text;
+    }
 }

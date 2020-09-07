@@ -36,14 +36,7 @@ import { OfferEffects } from './offer-store/effects/offer.effects';
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AuthEffects, OfferEffects]),
-    RouterModule.forRoot([
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: '', component: LandingComponent },
-      { path: 'add-offer', component: AddOfferComponent },
-      { path: 'edit-offer', component: EditOfferComponent },
-      { path: '**', redirectTo: '/' },
-    ])
+    AppRoutingModule
   ],
   providers: [AuthService, OfferService],
   bootstrap: [AppComponent]

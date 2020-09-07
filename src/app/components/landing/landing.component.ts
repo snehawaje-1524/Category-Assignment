@@ -21,6 +21,7 @@ export class LandingComponent implements OnInit {
   errorMessage = null;
   offers: Offer[];
   offer: Offer = new Offer();
+  isDarktheme: boolean;
 
   constructor(private router: Router, private offerService: OfferService,
     private store: Store<AppState>
@@ -51,14 +52,7 @@ export class LandingComponent implements OnInit {
     this.store.dispatch(new GetOffer());
   }
 
-
-  editOffer(offer: Offer): void {
-    window.localStorage.removeItem('editOfferId');
-    window.localStorage.setItem('editOfferId', offer.id.toString());
-    this.router.navigate(['edit-offer']);
-  }
-
-  addOffer(): void {
-    this.router.navigate(['add-offer']);
+  toggleTheme(): void {
+    this.isDarktheme = !this.isDarktheme;
   }
 }

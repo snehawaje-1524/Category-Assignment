@@ -1,17 +1,18 @@
 <div class="offer-container">
-    <h2 class="text-center">Add Offer</h2>
-    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <h2>Add Offer</h2>
+    <hr><br>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="addNewOffer">
 
         <div class="form-group">
             <label for="title">Title:</label>
-            <input formControlName="title" placeholder="Title" name="title" class="form-control" id="title">
+            <input tabindex="1" formControlName="title" placeholder="Title" name="title" class="form-control" id="title">
         </div>
 
         <div class="form-group">
             <label for="category">Category:</label>
-            <input formControlName="category" placeholder="Category" name="category" class="form-control" id="category">
+            <input tabindex="2" formControlName="category" placeholder="Category" name="category" class="form-control" id="category">
         </div>
 
-        <button class="action-button">Add</button>
+        <button tabindex="3" aria-label="Add" class="action-button addNew">Add</button>
     </form>
 </div>

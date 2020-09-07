@@ -24,7 +24,7 @@ export class AddOffer implements Action {
 
 export class UpdateOffer implements Action {
     readonly type = OfferActionTypes.UPDATE_OFFER;
-    constructor(public payload: Offer) { }
+    constructor(public payload: { index: number; newOffer: Offer }) { }
 }
 
 export class DeleteOffer implements Action {

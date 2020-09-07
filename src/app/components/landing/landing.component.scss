@@ -4,29 +4,6 @@
     justify-content: center;
 }
 
-#offerTable {
-    border-collapse: collapse;
-    width: 50%;
-}
-
-#offerTable td,
-#offerTable th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#offerTable tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-#offerTable tr:hover {
-    background-color: #ddd;
-}
-
-#offerTable th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #015BA5;
-    color: white;
+.toggleButton {
+    margin-left: 48%;
 }

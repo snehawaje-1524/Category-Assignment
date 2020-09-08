@@ -64,7 +64,7 @@ export class AuthEffects {
     RegisterSuccess: Observable<any> = this.actions.pipe(
         ofType(AuthActionTypes.REGISTER_SUCCESS),
         tap((user) => {
-            this.router.navigateByUrl('/');
+            this.router.navigate(['/login']);
         })
     );
 

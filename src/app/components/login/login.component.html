@@ -1,29 +1,32 @@
 <div>
-    <div>
-        <h1>Log in</h1>
-        <hr><br>
-        <div *ngIf="errorMessage">
-            <div class="alert alert-danger" role="alert">
-                {{errorMessage}}
-            </div>
+    <h2 *ngIf="showLogin">Login</h2>
+    <h2 *ngIf="!showLogin">Register</h2>
+    <hr><br>
+    <div *ngIf="errorMessage">
+        <div class="alert alert-danger" role="alert">
+            {{errorMessage}}
         </div>
-        <form (ngSubmit)="onSubmit()" ngNativeValidate class="loginForm">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input tabindex="1" [(ngModel)]="user.email" name="email" type="email" required class="form-control" id="email" placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input tabindex="2" [(ngModel)]="user.password" name="password" type="password" required class="form-control" id="password" placeholder="Enter a password">
-            </div>
-            <div>
-                <button tabindex="3" aria-label="Submit" type="submit" class="action-button submit">Submit</button>
-                <button tabindex="4" aria-label="Cancel" type="cancel" class="action-button cancel" [routerLink]="['/']">Cancel</button>
-            </div>
-        </form>
-        <p>
-            <span>Don't have an account?&nbsp;</span>
-            <a tabindex="5" [routerLink]="['/register']">Register!</a>
-        </p>
     </div>
+    <form ngNativeValidate class="loginForm">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input tabindex="1" [(ngModel)]="user.email" name="email" type="email" required class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input tabindex="2" [(ngModel)]="user.password" name="password" type="password" required class="form-control" id="password" placeholder="Enter a password">
+        </div>
+        <div>
+            <button tabindex="3" aria-label="Submit" type="submit" class="action-button submit" (click)="loginOrRegister()">
+                <span *ngIf="!showLogin">Register</span>
+                <span *ngIf="showLogin">Login</span>
+            </button>
+            <button tabindex="4" aria-label="Cancel" type="cancel" class="action-button cancel" [routerLink]="['/']">Cancel</button>
+        </div>
+    </form>
+    <p>
+        <span>Don't have an account?&nbsp;</span>
+        <a *ngIf="showLogin" tabindex="5" [routerLink]="['/register']">Register!</a>
+        <a *ngIf="!showLogin" tabindex="5" [routerLink]="['/login']">Login!</a>
+    </p>
 </div>

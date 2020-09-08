@@ -104,7 +104,11 @@
 <a name='L45'></a><a href='#L45'>45</a>
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
-<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -151,16 +155,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;div&gt;
-    &lt;div [ngClass]="isDarktheme ? 'dark' : 'light'"&gt;
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;div [ngClass]="isDarktheme ? 'dark' : 'light'"&gt;
+    &lt;header class="header"&gt;
         &lt;h1&gt;Shopping Offers&lt;/h1&gt;
         &lt;h5&gt;Welcome to the world of offers!&lt;/h5&gt;
         &lt;button class="action-button toggleButton" (click)="toggleTheme()"&gt;Toggle Theme&lt;/button&gt;
         &lt;hr&gt;&lt;br&gt;
         &lt;div *ngIf="isAuthenticated; then doSomething; else doSomethingElse;"&gt;&lt;/div&gt;
         &lt;ng-template #doSomething&gt;
-            &lt;p&gt;You logged in &lt;em&gt;{{user.email}}!&lt;/em&gt;&lt;/p&gt;
-            &lt;button tabindex="4" aria-label="Logout" class="action-button" (click)="logOut()"&gt;Log out&lt;/button&gt;
+            &lt;p id="logout"&gt;You logged in &lt;em&gt;{{user.email}}!&lt;/em&gt;&lt;/p&gt;
+            &lt;button id="logout" tabindex="4" aria-label="Logout" class="action-button" (click)="logOut()"&gt;Log
+                out&lt;/button&gt;
         &lt;/ng-template&gt;
         &lt;ng-template #doSomethingElse&gt;
             &lt;div class="logindiv"&gt;
@@ -169,35 +178,38 @@
                 &lt;button tabindex="2" aria-label="Register" [routerLink]="['/register']" class="action-button"&gt;Register&lt;/button&gt;
             &lt;/div&gt;
         &lt;/ng-template&gt;
-    &lt;/div&gt;
+    &lt;/header&gt;
+&lt;/div&gt;
 &nbsp;
-    &lt;div class="offer-container"&gt;
+&lt;div class="offer-container"&gt;
+    &lt;span&gt;
         &lt;h2&gt; Offer Details&lt;/h2&gt;
-        &lt;button tabindex="3" aria-label="AddOffer" class="action-button" *ngIf="isAuthenticated" [routerLink]="['add-offer']"&gt;Add Offer&lt;/button&gt;
-        &lt;table class="table table-striped" id="offerTable" [ngClass]="isDarktheme ? 'dark' : 'light'"&gt;
-            &lt;thead&gt;
-                &lt;tr&gt;
-                    &lt;th&gt;Id&lt;/th&gt;
-                    &lt;th&gt;Title&lt;/th&gt;
-                    &lt;th&gt;Category&lt;/th&gt;
-                    &lt;th *ngIf="isAuthenticated"&gt;Action&lt;/th&gt;
-                &lt;/tr&gt;
-            &lt;/thead&gt;
-            &lt;tbody&gt;
-                &lt;tr *ngFor="let offer of offers"&gt;
-                    &lt;td tabindex="0"&gt;{{offer.id}}&lt;/td&gt;
-                    &lt;td tabindex="0"&gt;{{offer.title}}&lt;/td&gt;
-                    &lt;td tabindex="0"&gt;{{offer.category}}&lt;/td&gt;
-                    &lt;td *ngIf="isAuthenticated"&gt;&lt;button tabindex="0" aria-label="Delete" class="action-button" (click)="deleteOffer(offer)"&gt;
-                            Delete&lt;/button&gt;
-                        &lt;button tabindex="0" aria-label="Edit" class="action-button" [routerLink]="['/offers/', offer.id, 'edit-offer']"&gt;
-                            Edit&lt;/button&gt;
-                    &lt;/td&gt;
-                &lt;/tr&gt;
-            &lt;/tbody&gt;
-        &lt;/table&gt;
-    &lt;/div&gt;
-&nbsp;
+        &lt;button [ngClass]="isDarktheme ? 'dark' : 'light'" tabindex="3" aria-label="AddOffer"
+            class="action-button addButton" *ngIf="isAuthenticated" [routerLink]="['add-offer']"&gt;Add Offer&lt;/button&gt;
+    &lt;/span&gt;
+    &lt;table class="table table-striped" id="offerTable" [ngClass]="isDarktheme ? 'dark' : 'light'"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th&gt;Id&lt;/th&gt;
+                &lt;th&gt;Title&lt;/th&gt;
+                &lt;th&gt;Category&lt;/th&gt;
+                &lt;th *ngIf="isAuthenticated"&gt;Action&lt;/th&gt;
+            &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+            &lt;tr *ngFor="let offer of offers"&gt;
+                &lt;td tabindex="0"&gt;{{offer.id}}&lt;/td&gt;
+                &lt;td tabindex="0"&gt;{{offer.title}}&lt;/td&gt;
+                &lt;td tabindex="0"&gt;{{offer.category}}&lt;/td&gt;
+                &lt;td *ngIf="isAuthenticated"&gt;
+                    &lt;button tabindex="0" aria-label="Edit" class="action-button" [routerLink]="['/offers/', offer.id, 'edit-offer']"&gt;
+                        Edit&lt;/button&gt;
+                    &lt;button tabindex="0" aria-label="Delete" class="action-button" (click)="deleteOffer(offer)"&gt;
+                        Delete&lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/tbody&gt;
+    &lt;/table&gt;
 &lt;/div&gt;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -205,7 +217,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Sep 07 2020 23:43:24 GMT+0530 (India Standard Time)
+                at Tue Sep 08 2020 20:40:23 GMT+0530 (India Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

@@ -1,0 +1,3746 @@
+{
+    "pipes": [],
+    "interfaces": [
+        {
+            "name": "AppState",
+            "id": "interface-AppState-94c25be7ec873f628a7b80c3e1449a47",
+            "file": "src/app/store/app.states.ts",
+            "type": "interface",
+            "sourceCode": "import * as auth from './reducers/auth.reducers';\r\nimport * as offer from '../offer-store/reducers/offer.reducers';\r\nimport { createFeatureSelector } from '@ngrx/store';\r\n\r\nexport interface AppState {\r\n    authState: auth.State;\r\n    offer: offer.State;\r\n}\r\n\r\nexport const reducers = {\r\n    auth: auth.reducer,\r\n    offer: offer.reducer\r\n\r\n};\r\n\r\nexport const selectAuthState = createFeatureSelector<AppState>('auth');\r\nexport const selectOfferState = createFeatureSelector<AppState>('offer');\r\n\r\n",
+            "properties": [
+                {
+                    "name": "authState",
+                    "type": "auth.State",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "offer",
+                    "type": "offer.State",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "State",
+            "id": "interface-State-56ea06ca0c106f33afe034dd0983a05d",
+            "file": "src/app/offer-store/reducers/offer.reducers.ts",
+            "type": "interface",
+            "sourceCode": "import { Offer } from '../../models/offer.model';\r\nimport { All, GET_OFFER, LOAD_OFFER, ADD_OFFER, ADD_SUCCESS, UPDATE_OFFER, UPDATE_SUCCESS, DELETE_OFFER, DELETE_SUCCESS } from '../actions/offer.actions';\r\n\r\nexport interface State {\r\n    offer: Offer[];\r\n    success: boolean | null;\r\n    message: string | null;\r\n}\r\n\r\nexport const initialState: State = {\r\n    offer: [],\r\n    message: null,\r\n    success: null\r\n};\r\n\r\nexport function reducer(state = initialState, action: All): State {\r\n    switch (action.type) {\r\n        case GET_OFFER: {\r\n            return {\r\n                ...state,\r\n            };\r\n        }\r\n        case LOAD_OFFER: {\r\n            return {\r\n                ...state,\r\n                offer: action.payload,\r\n                message: null,\r\n            };\r\n        }\r\n        case ADD_OFFER: {\r\n            return {\r\n                ...state\r\n            };\r\n\r\n        }\r\n        case ADD_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                message: 'Offer added successfully!',\r\n            };\r\n        }\r\n        case UPDATE_OFFER: {\r\n            return {\r\n                ...state\r\n            };\r\n\r\n        }\r\n        case UPDATE_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                message: 'Offer updated successfully!',\r\n            };\r\n        }\r\n        case DELETE_OFFER: {\r\n            return {\r\n                ...state\r\n            };\r\n\r\n        }\r\n        case DELETE_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                message: 'Offer deleted successfully!',\r\n            };\r\n        }\r\n        default: {\r\n            return state;\r\n        }\r\n    }\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "message",
+                    "type": "string | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                },
+                {
+                    "name": "offer",
+                    "type": "Offer[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 5
+                },
+                {
+                    "name": "success",
+                    "type": "boolean | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        },
+        {
+            "name": "State",
+            "id": "interface-State-ff6153f601b48460e21b23f2d30aaaaf-1",
+            "file": "src/app/store/reducers/auth.reducers.ts",
+            "type": "interface",
+            "sourceCode": "import { User } from '../../models/user';\r\nimport { AuthActionTypes, All } from '../actions/auth.actions';\r\n\r\n\r\nexport interface State {\r\n    isAuthenticated: boolean;\r\n    user: User | null;\r\n    errorMessage: string | null;\r\n}\r\n\r\nexport const initialState: State = {\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n};\r\n\r\nexport function reducer(state = initialState, action: All): State {\r\n    switch (action.type) {\r\n        case AuthActionTypes.LOGIN_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGIN_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'Incorrect email and/or password.'\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'That email is already in use.'\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGOUT: {\r\n            return initialState;\r\n        }\r\n        default: {\r\n            return state;\r\n        }\r\n    }\r\n}",
+            "properties": [
+                {
+                    "name": "errorMessage",
+                    "type": "string | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "isAuthenticated",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 6
+                },
+                {
+                    "name": "user",
+                    "type": "User | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 7
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": [],
+            "isDuplicate": true,
+            "duplicateId": 1,
+            "duplicateName": "State-1"
+        }
+    ],
+    "injectables": [
+        {
+            "name": "AuthEffects",
+            "id": "injectable-AuthEffects-8036aa11e7ddf7736928b217447c0eda",
+            "file": "src/app/store/effects/auth.effects.ts",
+            "properties": [
+                {
+                    "name": "LogIn",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN),\r\n        map((action: LogIn) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.login({ email: payload.email, password: payload.password }).pipe(\r\n                map((user) => {\r\n                    if (user.length > 0) {\r\n                        return new LogInSuccess({ email: payload.email });\r\n                    } else {\r\n                        return new LogInFailure({ error: 'Invalid credentials' });\r\n                    }\r\n                }));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 24,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "LogInFailure",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_FAILURE)\r\n    )",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 48,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: false}"
+                        }
+                    ]
+                },
+                {
+                    "name": "LogInSuccess",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_SUCCESS),\r\n        tap((user) => {\r\n            localStorage.setItem('user', JSON.stringify(user.payload));\r\n            this.router.navigateByUrl('/');\r\n        })\r\n    )",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 39,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: false}"
+                        }
+                    ]
+                },
+                {
+                    "name": "LogOut",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGOUT),\r\n        tap((user) => {\r\n            localStorage.removeItem('token');\r\n        })\r\n    )",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 77,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: false}"
+                        }
+                    ],
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "Register",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER),\r\n        map((action: Register) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.register(payload).pipe(\r\n                map((result) => {\r\n                    return new RegisterSuccess(result);\r\n                }));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 53,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "RegisterFailure",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_FAILURE)\r\n    )",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 72,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: false}"
+                        }
+                    ]
+                },
+                {
+                    "name": "RegisterSuccess",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_SUCCESS),\r\n        tap((user) => {\r\n            this.router.navigate(['/login']);\r\n        })\r\n    )",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 64,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: false}"
+                        }
+                    ]
+                }
+            ],
+            "methods": [],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\nimport { Actions, Effect, ofType } from '@ngrx/effects';\r\nimport { Observable } from 'rxjs';\r\nimport { map, switchMap, tap } from 'rxjs/operators';\r\nimport { AuthService } from '../../services/auth.service';\r\nimport {\r\n    AuthActionTypes,\r\n    LogIn, LogInSuccess, LogInFailure,\r\n    Register, RegisterSuccess, RegisterFailure,\r\n    LogOut,\r\n} from '../actions/auth.actions';\r\n\r\n@Injectable()\r\nexport class AuthEffects {\r\n\r\n    constructor(\r\n        private actions: Actions,\r\n        private authService: AuthService,\r\n        private router: Router,\r\n    ) { }\r\n\r\n    @Effect()\r\n    LogIn: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN),\r\n        map((action: LogIn) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.login({ email: payload.email, password: payload.password }).pipe(\r\n                map((user) => {\r\n                    if (user.length > 0) {\r\n                        return new LogInSuccess({ email: payload.email });\r\n                    } else {\r\n                        return new LogInFailure({ error: 'Invalid credentials' });\r\n                    }\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_SUCCESS),\r\n        tap((user) => {\r\n            localStorage.setItem('user', JSON.stringify(user.payload));\r\n            this.router.navigateByUrl('/');\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_FAILURE)\r\n    );\r\n\r\n    @Effect()\r\n    Register: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER),\r\n        map((action: Register) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.register(payload).pipe(\r\n                map((result) => {\r\n                    return new RegisterSuccess(result);\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_SUCCESS),\r\n        tap((user) => {\r\n            this.router.navigate(['/login']);\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_FAILURE)\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    public LogOut: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGOUT),\r\n        tap((user) => {\r\n            localStorage.removeItem('token');\r\n        })\r\n    );\r\n}",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "actions",
+                        "type": "Actions"
+                    },
+                    {
+                        "name": "authService",
+                        "type": "AuthService"
+                    },
+                    {
+                        "name": "router",
+                        "type": "Router"
+                    }
+                ],
+                "line": 15,
+                "jsdoctags": [
+                    {
+                        "name": "actions",
+                        "type": "Actions",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "authService",
+                        "type": "AuthService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "router",
+                        "type": "Router",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "AuthService",
+            "id": "injectable-AuthService-7c01d26d1d61328878fb46f7634b45c7",
+            "file": "src/app/services/auth.service.ts",
+            "properties": [
+                {
+                    "name": "BASE_URL",
+                    "defaultValue": "environment.baseURL",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                }
+            ],
+            "methods": [
+                {
+                    "name": "handleError",
+                    "args": [
+                        {
+                            "name": "error",
+                            "type": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 38,
+                    "jsdoctags": [
+                        {
+                            "name": "error",
+                            "type": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "login",
+                    "args": [
+                        {
+                            "name": "user",
+                            "type": "User"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<User[]>",
+                    "typeParameters": [],
+                    "line": 16,
+                    "jsdoctags": [
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "register",
+                    "args": [
+                        {
+                            "name": "user",
+                            "type": "User"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<User>",
+                    "typeParameters": [],
+                    "line": 24,
+                    "jsdoctags": [
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\r\nimport { HttpClient, HttpHeaders } from '@angular/common/http';\r\nimport { User } from '../models/user';\r\nimport { Observable, throwError } from 'rxjs';\r\nimport { retry, catchError } from 'rxjs/operators';\r\nimport { environment } from 'src/environments/environment';\r\n\r\n@Injectable({\r\n  providedIn: 'root'\r\n})\r\nexport class AuthService {\r\n  BASE_URL = environment.baseURL;\r\n\r\n  constructor(private http: HttpClient) { }\r\n\r\n  login(user: User): Observable<User[]> {\r\n    const url = encodeURI('users?email=' + user.email + '&password=' + user.password);\r\n    return this.http.get<User[]>(this.BASE_URL + url).pipe(\r\n      retry(1),\r\n      catchError(this.handleError)\r\n    );\r\n  }\r\n\r\n  register(user: User): Observable<User> {\r\n    const httpOptions = {\r\n      headers: new HttpHeaders({\r\n        'Content-Type': 'application/json'\r\n      })\r\n    };\r\n    const url = encodeURI('users');\r\n    return this.http.post<User>(this.BASE_URL + url, user, httpOptions).pipe(\r\n      retry(1),\r\n      catchError(this.handleError)\r\n    );\r\n  }\r\n\r\n  // tslint:disable-next-line: typedef\r\n  handleError(error) {\r\n    let errorMessage = '';\r\n    if (error.error instanceof ErrorEvent) {\r\n      errorMessage = `Error: ${error.error.message}`;\r\n    } else {\r\n      errorMessage = `Error Code: ${error.status}\\nMessage: ${error.message}`;\r\n    }\r\n    window.alert(errorMessage);\r\n    return throwError(errorMessage);\r\n  }\r\n\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient"
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "OfferEffects",
+            "id": "injectable-OfferEffects-3c0a11fdbced039771d3eb3a048e7b24",
+            "file": "src/app/offer-store/effects/offer.effects.ts",
+            "properties": [
+                {
+                    "name": "AddOffer",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(ADD_OFFER),\r\n        map((action: AddOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.createOffer(payload).pipe(\r\n                map((data) => {\r\n                    if (data) {\r\n                        // tslint:disable-next-line: no-unused-expression\r\n                        return new AddOffersSuccess(data);\r\n                    }\r\n                }));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 27,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: true}"
+                        }
+                    ]
+                },
+                {
+                    "name": "DeleteOffer",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(DELETE_OFFER),\r\n        map((action: DeleteOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.deleteOffer(payload).pipe(\r\n                map((data) => {\r\n                    // tslint:disable-next-line: no-unused-expression\r\n                    return new DeleteOffersSuccess();\r\n                }));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 55,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: true}"
+                        }
+                    ]
+                },
+                {
+                    "name": "GetOffer",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(GET_OFFER),\r\n        map((action: GetOffer) => action),\r\n        mergeMap(payload => {\r\n            return this.offerService.getOffers().pipe(\r\n                map((data) => new LoadOffersSuccess(data)));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 18,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: true}"
+                        }
+                    ]
+                },
+                {
+                    "name": "UpdateOffer",
+                    "defaultValue": "this.actions.pipe(\r\n        ofType(UPDATE_OFFER),\r\n        map((action: UpdateOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.updateOffer(payload.index, payload.newOffer).pipe(\r\n                map((data) => {\r\n                    if (data) {\r\n                        // tslint:disable-next-line: no-unused-expression\r\n                        return new UpdateOffersSuccess(data);\r\n                    }\r\n                }));\r\n        }))",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "decorators": [
+                        {
+                            "name": "Effect",
+                            "stringifiedArguments": "{dispatch: true}"
+                        }
+                    ]
+                }
+            ],
+            "methods": [],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\r\nimport { Actions, Effect, ofType } from '@ngrx/effects';\r\nimport { Observable } from 'rxjs';\r\nimport { map, mergeMap } from 'rxjs/operators';\r\nimport { OfferService } from '../../services/offer.service';\r\nimport {\r\n    GetOffer, LoadOffersSuccess, AddOffersSuccess, AddOffer, UpdateOffer,\r\n    UpdateOffersSuccess, DeleteOffer, DeleteOffersSuccess, GET_OFFER, ADD_OFFER, UPDATE_OFFER, DELETE_OFFER,\r\n} from '../actions/offer.actions';\r\n\r\n@Injectable()\r\nexport class OfferEffects {\r\n    constructor(\r\n        private actions: Actions,\r\n        private offerService: OfferService) { }\r\n\r\n    @Effect({ dispatch: true })\r\n    GetOffer: Observable<any> = this.actions.pipe(\r\n        ofType(GET_OFFER),\r\n        map((action: GetOffer) => action),\r\n        mergeMap(payload => {\r\n            return this.offerService.getOffers().pipe(\r\n                map((data) => new LoadOffersSuccess(data)));\r\n        }));\r\n\r\n    @Effect({ dispatch: true })\r\n    AddOffer: Observable<any> = this.actions.pipe(\r\n        ofType(ADD_OFFER),\r\n        map((action: AddOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.createOffer(payload).pipe(\r\n                map((data) => {\r\n                    if (data) {\r\n                        // tslint:disable-next-line: no-unused-expression\r\n                        return new AddOffersSuccess(data);\r\n                    }\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: true })\r\n    UpdateOffer: Observable<any> = this.actions.pipe(\r\n        ofType(UPDATE_OFFER),\r\n        map((action: UpdateOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.updateOffer(payload.index, payload.newOffer).pipe(\r\n                map((data) => {\r\n                    if (data) {\r\n                        // tslint:disable-next-line: no-unused-expression\r\n                        return new UpdateOffersSuccess(data);\r\n                    }\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: true })\r\n    DeleteOffer: Observable<any> = this.actions.pipe(\r\n        ofType(DELETE_OFFER),\r\n        map((action: DeleteOffer) => action.payload),\r\n        mergeMap(payload => {\r\n            return this.offerService.deleteOffer(payload).pipe(\r\n                map((data) => {\r\n                    // tslint:disable-next-line: no-unused-expression\r\n                    return new DeleteOffersSuccess();\r\n                }));\r\n        }));\r\n}\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "actions",
+                        "type": "Actions"
+                    },
+                    {
+                        "name": "offerService",
+                        "type": "OfferService"
+                    }
+                ],
+                "line": 12,
+                "jsdoctags": [
+                    {
+                        "name": "actions",
+                        "type": "Actions",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "offerService",
+                        "type": "OfferService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        },
+        {
+            "name": "OfferService",
+            "id": "injectable-OfferService-0caf2886ceb25306455d043b2aa65b40",
+            "file": "src/app/services/offer.service.ts",
+            "properties": [
+                {
+                    "name": "baseUrl",
+                    "defaultValue": "environment.baseURL + 'offers/'",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
+                }
+            ],
+            "methods": [
+                {
+                    "name": "createOffer",
+                    "args": [
+                        {
+                            "name": "offer",
+                            "type": "Offer"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<Offer>",
+                    "typeParameters": [],
+                    "line": 30,
+                    "jsdoctags": [
+                        {
+                            "name": "offer",
+                            "type": "Offer",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "deleteOffer",
+                    "args": [
+                        {
+                            "name": "id",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<Offer>",
+                    "typeParameters": [],
+                    "line": 45,
+                    "jsdoctags": [
+                        {
+                            "name": "id",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getOfferById",
+                    "args": [
+                        {
+                            "name": "id",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<Offer>",
+                    "typeParameters": [],
+                    "line": 23,
+                    "jsdoctags": [
+                        {
+                            "name": "id",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "getOffers",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Observable<Offer[]>",
+                    "typeParameters": [],
+                    "line": 16
+                },
+                {
+                    "name": "handleError",
+                    "args": [
+                        {
+                            "name": "error",
+                            "type": ""
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 53,
+                    "jsdoctags": [
+                        {
+                            "name": "error",
+                            "type": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "updateOffer",
+                    "args": [
+                        {
+                            "name": "offerId",
+                            "type": "number"
+                        },
+                        {
+                            "name": "offer",
+                            "type": "Offer"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Observable<Offer>",
+                    "typeParameters": [],
+                    "line": 37,
+                    "jsdoctags": [
+                        {
+                            "name": "offerId",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "offer",
+                            "type": "Offer",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { Offer } from '../models/offer.model';\nimport { Observable, throwError } from 'rxjs';\nimport { retry, catchError } from 'rxjs/operators';\nimport { environment } from 'src/environments/environment';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class OfferService {\n\n  constructor(private http: HttpClient) { }\n  baseUrl = environment.baseURL + 'offers/';\n\n  getOffers(): Observable<Offer[]> {\n    return this.http.get<Offer[]>(this.baseUrl).pipe(\n      retry(1),\n      catchError(this.handleError)\n    );\n  }\n\n  getOfferById(id: number): Observable<Offer> {\n    return this.http.get<Offer>(this.baseUrl + id).pipe(\n      retry(1),\n      catchError(this.handleError)\n    );\n  }\n\n  createOffer(offer: Offer): Observable<Offer> {\n    return this.http.post<Offer>(this.baseUrl, offer).pipe(\n      retry(1),\n      catchError(this.handleError)\n    );\n  }\n\n  updateOffer(offerId: number, offer: Offer): Observable<Offer> {\n    return this.http.put<Offer>(this.baseUrl + offerId, offer).pipe(\n      retry(1),\n      catchError(this.handleError)\n    );\n  }\n\n\n  deleteOffer(id: number): Observable<Offer> {\n    return this.http.delete<Offer>(this.baseUrl + id).pipe(\n      retry(1),\n      catchError(this.handleError)\n    );\n  }\n\n  // tslint:disable-next-line: typedef\n  handleError(error) {\n    let errorMessage = '';\n    if (error.error instanceof ErrorEvent) {\n      errorMessage = `Error: ${error.error.message}`;\n    } else {\n      errorMessage = `Error Code: ${error.status}\\nMessage: ${error.message}`;\n    }\n    window.alert(errorMessage);\n    return throwError(errorMessage);\n  }\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient"
+                    }
+                ],
+                "line": 11,
+                "jsdoctags": [
+                    {
+                        "name": "http",
+                        "type": "HttpClient",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        }
+    ],
+    "classes": [
+        {
+            "name": "AddOffer",
+            "id": "class-AddOffer-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "Offer"
+                    }
+                ],
+                "line": 20,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "Offer",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "ADD_OFFER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "AddOffersSuccess",
+            "id": "class-AddOffersSuccess-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "Offer"
+                    }
+                ],
+                "line": 40,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "Offer",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "ADD_SUCCESS",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 40,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "AppPage",
+            "id": "class-AppPage-a0db91bfa3b9914e9048612074084ee6",
+            "file": "e2e/src/app.po.ts",
+            "type": "class",
+            "sourceCode": "import { browser, by, element } from 'protractor';\n\nexport class AppPage {\n  navigateTo(): Promise<unknown> {\n    return browser.get(browser.baseUrl) as Promise<unknown>;\n  }\n\n  getTitleText(): Promise<string> {\n    return element(by.css('app-root .content span')).getText() as Promise<string>;\n  }\n}\n",
+            "properties": [],
+            "methods": [
+                {
+                    "name": "getTitleText",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<string>",
+                    "typeParameters": [],
+                    "line": 8
+                },
+                {
+                    "name": "navigateTo",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "Promise<unknown>",
+                    "typeParameters": [],
+                    "line": 4
+                }
+            ],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        },
+        {
+            "name": "DeleteOffer",
+            "id": "class-DeleteOffer-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "number"
+                    }
+                ],
+                "line": 30,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "number",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "DELETE_OFFER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "DeleteOffersSuccess",
+            "id": "class-DeleteOffersSuccess-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 50
+            },
+            "properties": [
+                {
+                    "name": "type",
+                    "defaultValue": "DELETE_SUCCESS",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 50,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "GetOffer",
+            "id": "class-GetOffer-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [],
+                "line": 15
+            },
+            "properties": [
+                {
+                    "name": "type",
+                    "defaultValue": "GET_OFFER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "LoadOffersSuccess",
+            "id": "class-LoadOffersSuccess-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "Offer[]"
+                    }
+                ],
+                "line": 35,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "Offer[]",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "Offer[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 36,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "LOAD_OFFER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "LogIn",
+            "id": "class-LogIn-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 15,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 16,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.LOGIN",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "LogInFailure",
+            "id": "class-LogInFailure-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 25,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.LOGIN_FAILURE",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "LogInSuccess",
+            "id": "class-LogInSuccess-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 20,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 21,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.LOGIN_SUCCESS",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "LogOut",
+            "id": "class-LogOut-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "properties": [
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.LOGOUT",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 45,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "Offer",
+            "id": "class-Offer-a1de8fb59fd54bfe14980df81b587002",
+            "file": "src/app/models/offer.model.ts",
+            "type": "class",
+            "sourceCode": "export class Offer {\r\n    id: number;\r\n    title: string;\r\n    category: string;\r\n}\r\n",
+            "properties": [
+                {
+                    "name": "category",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "id",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "title",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        },
+        {
+            "name": "Register",
+            "id": "class-Register-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 30,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 31,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.REGISTER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 30,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "RegisterFailure",
+            "id": "class-RegisterFailure-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 40,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 41,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.REGISTER_FAILURE",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 40,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "RegisterSuccess",
+            "id": "class-RegisterSuccess-4d16c8d89efb738b113d120f6adc6edc",
+            "file": "src/app/store/actions/auth.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\n\r\n\r\nexport enum AuthActionTypes {\r\n    LOGIN = '[Auth] Login',\r\n    LOGIN_SUCCESS = '[Auth] Login Success',\r\n    LOGIN_FAILURE = '[Auth] Login Failure',\r\n    REGISTER = '[Auth] Register',\r\n    REGISTER_SUCCESS = '[Auth] Signup Success',\r\n    REGISTER_FAILURE = '[Auth] Signup Failure',\r\n    LOGOUT = '[Auth] Logout'\r\n}\r\n\r\nexport class LogIn implements Action {\r\n    readonly type = AuthActionTypes.LOGIN;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInSuccess implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogInFailure implements Action {\r\n    readonly type = AuthActionTypes.LOGIN_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class Register implements Action {\r\n    readonly type = AuthActionTypes.REGISTER;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterSuccess implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_SUCCESS;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class RegisterFailure implements Action {\r\n    readonly type = AuthActionTypes.REGISTER_FAILURE;\r\n    constructor(public payload: any) { }\r\n}\r\n\r\nexport class LogOut implements Action {\r\n    readonly type = AuthActionTypes.LOGOUT;\r\n}\r\n\r\nexport type All =\r\n    | LogIn\r\n    | LogInSuccess\r\n    | LogInFailure\r\n    | Register\r\n    | RegisterSuccess\r\n    | RegisterFailure\r\n    | LogOut;\r\n\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "any"
+                    }
+                ],
+                "line": 35,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "any",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 36,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "AuthActionTypes.REGISTER_SUCCESS",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 35,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "UpdateOffer",
+            "id": "class-UpdateOffer-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "literal type"
+                    }
+                ],
+                "line": 25,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "literal type",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "literal type",
+                    "optional": false,
+                    "description": "",
+                    "line": 26,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "UPDATE_OFFER",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "UpdateOffersSuccess",
+            "id": "class-UpdateOffersSuccess-8eeea2d00b18da40ea2d61a533f92fbd",
+            "file": "src/app/offer-store/actions/offer.actions.ts",
+            "type": "class",
+            "sourceCode": "import { Action } from '@ngrx/store';\r\nimport { Offer } from 'src/app/models/offer.model';\r\n\r\nexport const GET_OFFER = '[Offer] Get Offer';\r\nexport const ADD_OFFER = '[Offer] Add Offer';\r\nexport const UPDATE_OFFER = '[Offer] Update Offer';\r\nexport const DELETE_OFFER = '[Offer] Delete Offer';\r\nexport const LOAD_OFFER = '[Offer] Load Offer';\r\nexport const ADD_SUCCESS = '[Offer] Add Success';\r\nexport const UPDATE_SUCCESS = '[Offer] Update Success';\r\nexport const DELETE_SUCCESS = '[Offer] Delete Success';\r\n\r\n\r\nexport class GetOffer implements Action {\r\n    readonly type = GET_OFFER;\r\n    constructor() { }\r\n}\r\n\r\nexport class AddOffer implements Action {\r\n    readonly type = ADD_OFFER;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffer implements Action {\r\n    readonly type = UPDATE_OFFER;\r\n    constructor(public payload: { index: number; newOffer: Offer }) { }\r\n}\r\n\r\nexport class DeleteOffer implements Action {\r\n    readonly type = DELETE_OFFER;\r\n    constructor(public payload: number) { }\r\n}\r\n\r\nexport class LoadOffersSuccess implements Action {\r\n    readonly type = LOAD_OFFER;\r\n    constructor(public payload: Offer[]) { }\r\n}\r\n\r\nexport class AddOffersSuccess implements Action {\r\n    readonly type = ADD_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class UpdateOffersSuccess implements Action {\r\n    readonly type = UPDATE_SUCCESS;\r\n    constructor(public payload: Offer) { }\r\n}\r\n\r\nexport class DeleteOffersSuccess implements Action {\r\n    readonly type = DELETE_SUCCESS;\r\n    constructor() { }\r\n}\r\n\r\nexport type All =\r\n    | GetOffer\r\n    | AddOffer\r\n    | UpdateOffer\r\n    | DeleteOffer\r\n    | LoadOffersSuccess\r\n    | AddOffersSuccess\r\n    | UpdateOffersSuccess\r\n    | DeleteOffersSuccess;\r\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "payload",
+                        "type": "Offer"
+                    }
+                ],
+                "line": 45,
+                "jsdoctags": [
+                    {
+                        "name": "payload",
+                        "type": "Offer",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "properties": [
+                {
+                    "name": "payload",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 46,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "type",
+                    "defaultValue": "UPDATE_SUCCESS",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 45,
+                    "modifierKind": [
+                        132
+                    ]
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "implements": [
+                "Action"
+            ]
+        },
+        {
+            "name": "User",
+            "id": "class-User-e39939a2a229b500a8dc08b0933ca3d0",
+            "file": "src/app/models/user.ts",
+            "type": "class",
+            "sourceCode": "export class User {\r\n    id?: string;\r\n    email?: string;\r\n    password?: string;\r\n}",
+            "properties": [
+                {
+                    "name": "email",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "id",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "password",
+                    "type": "string",
+                    "optional": true,
+                    "description": "",
+                    "line": 4
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
+    "directives": [],
+    "components": [
+        {
+            "name": "AddEditOfferComponent",
+            "id": "component-AddEditOfferComponent-91a404639fe9e78807e541a08f43abc6",
+            "file": "src/app/components/add-edit-offer/add-edit-offer.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-add-edit-offer",
+            "styleUrls": [
+                "./add-edit-offer.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./add-edit-offer.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "addForm",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                },
+                {
+                    "name": "getState",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
+                    "name": "offer",
+                    "defaultValue": "new Offer()",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "offerId",
+                    "type": "any",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "oldOffer",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "showUpdate",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "addEditForm",
+                    "args": [
+                        {
+                            "name": "oldOffer",
+                            "type": "Offer",
+                            "optional": true
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 55,
+                    "modifierKind": [
+                        112
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "oldOffer",
+                            "type": "Offer",
+                            "optional": true,
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "navigateToAddorEdit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 71
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 29
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Offer } from './../../models/offer.model';\nimport { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';\nimport { Observable } from 'rxjs';\nimport { Router, ActivatedRoute } from '@angular/router';\nimport { AppState, selectAuthState } from 'src/app/store/app.states';\nimport { Store } from '@ngrx/store';\nimport { OfferService } from 'src/app/services/offer.service';\nimport { UpdateOffer, GetOffer, AddOffer } from 'src/app/offer-store/actions/offer.actions';\n\n@Component({\n  selector: 'app-add-edit-offer',\n  templateUrl: './add-edit-offer.component.html',\n  styleUrls: ['./add-edit-offer.component.scss']\n})\nexport class AddEditOfferComponent implements OnInit {\n  addForm: FormGroup;\n  offer: Offer = new Offer();\n  getState: Observable<any>;\n  offerId: any;\n  showUpdate: boolean;\n  oldOffer: Offer;\n\n  constructor(private router: Router, private route: ActivatedRoute, private offerService: OfferService,\n    // tslint:disable-next-line: align\n    private store: Store<AppState>) {\n    this.getState = this.store.select(selectAuthState);\n  }\n  ngOnInit(): void {\n    if (this.route.snapshot.params && this.route.snapshot.params.offerId) {\n      this.offerId = this.route.snapshot.params.offerId;\n      this.offerService.getOfferById(this.offerId).subscribe((data: Offer) => {\n        this.oldOffer = data;\n        this.addEditForm(this.oldOffer);\n      });\n      this.addEditForm(this.oldOffer);\n    }\n    this.addEditForm(this.offer);\n    this.store.subscribe((data) => {\n      if (data) {\n        if (data.offer.success) {\n          this.addForm.reset();\n        }\n      }\n      this.route.data.subscribe((params) => {\n        if (params && params.isUpdate) {\n          this.showUpdate = params.isUpdate;\n        } else {\n          this.showUpdate = false;\n        }\n      });\n    });\n  }\n\n  private addEditForm(oldOffer?: Offer): void {\n    if (oldOffer) {\n      this.addForm = new FormGroup({\n        id: new FormControl(oldOffer.id),\n        title: new FormControl(oldOffer.title),\n        category: new FormControl(oldOffer.category),\n      });\n    } else {\n      this.addForm = new FormGroup({\n        id: new FormControl(''),\n        title: new FormControl(''),\n        category: new FormControl(''),\n      });\n    }\n  }\n\n  navigateToAddorEdit(): void {\n    if (this.showUpdate) {\n      const payload = {\n        index: this.offerId,\n        newOffer: this.addForm.value,\n      };\n      this.store.dispatch(new UpdateOffer(payload));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    } else {\n      this.store.dispatch(new AddOffer(this.addForm.value));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    }\n  }\n\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".addNewOffer {\r\n    display: grid;\r\n    justify-content: center;\r\n}\r\n\r\n#id {\r\n    margin: 15px 0px 20px 60px;\r\n}\r\n\r\n#title {\r\n    margin: 15px 0px 20px 46px;\r\n}\r\n\r\n#category {\r\n    margin: 15px 0px 20px 20px;\r\n}\r\n\r\n.addNew {\r\n    width: 10%;\r\n    margin: 15px 0px 0px 615px;\r\n}",
+                    "styleUrl": "./add-edit-offer.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "router",
+                        "type": "Router"
+                    },
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute"
+                    },
+                    {
+                        "name": "offerService",
+                        "type": "OfferService"
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>"
+                    }
+                ],
+                "line": 22,
+                "jsdoctags": [
+                    {
+                        "name": "router",
+                        "type": "Router",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "offerService",
+                        "type": "OfferService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div>\n    <h2 *ngIf=\"!showUpdate\">Add Offer</h2>\n    <h2 *ngIf=\"showUpdate\">Update Offer</h2>\n    <hr><br>\n    <form [formGroup]=\"addForm\" class=\"addNewOffer\">\n        <div>\n            <label for=\"id\">Id: </label>\n            <input type=\"text\" formControlName=\"id\" placeholder=\"id\" name=\"id\" class=\"form-control\" id=\"id\">\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"title\">Title:</label>\n            <input tabindex=\"1\" formControlName=\"title\" placeholder=\"Title\" name=\"title\" class=\"form-control\" id=\"title\">\n        </div>\n\n        <div class=\"form-group\">\n            <label for=\"category\">Category:</label>\n            <input tabindex=\"2\" formControlName=\"category\" placeholder=\"Category\" name=\"category\" class=\"form-control\" id=\"category\">\n        </div>\n    </form>\n    <button tabindex=\"3\" aria-label=\"Add-Edit\" class=\"action-button addNew\" (click)=\"navigateToAddorEdit()\">\n        <span *ngIf=\"!showUpdate\">Add</span>\n        <span *ngIf=\"showUpdate\">Update</span>\n    </button>\n</div>"
+        },
+        {
+            "name": "AppComponent",
+            "id": "component-AppComponent-67aea119a5c191f6e0aba0242cbc657e",
+            "file": "src/app/app.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-root",
+            "styleUrls": [
+                "./app.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./app.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "title",
+                    "defaultValue": "'category-assignment'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  title = 'category-assignment';\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "",
+                    "styleUrl": "./app.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "templateData": "<router-outlet></router-outlet>"
+        },
+        {
+            "name": "ButtonComponent",
+            "id": "component-ButtonComponent-642c6c4e474cd5a0ac760dfda26b2fc9",
+            "file": "src/stories/button.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "storybook-button",
+            "styleUrls": [
+                "./button.css"
+            ],
+            "styles": [],
+            "template": "<button   type=\"button\"\n   (click)=\"onClick.emit($event)\"\n   [ngClass]=\"classes\"\n   [ngStyle]=\"{ 'background-color': backgroundColor }\"\n >\n   {{ label }}\n </button>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "backgroundColor",
+                    "description": "<p>What background color to use</p>\n",
+                    "line": 26,
+                    "type": "string"
+                },
+                {
+                    "name": "label",
+                    "defaultValue": "'Button'",
+                    "description": "<p>Button contents</p>\n",
+                    "line": 40
+                },
+                {
+                    "name": "primary",
+                    "defaultValue": "false",
+                    "description": "<p>Is this the principal call to action on the page?</p>\n",
+                    "line": 20
+                },
+                {
+                    "name": "size",
+                    "defaultValue": "'medium'",
+                    "description": "<p>How large should the button be?</p>\n",
+                    "line": 32,
+                    "type": "\"small\" | \"medium\" | \"large\""
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "onClick",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "description": "<p>Optional click handler</p>\n",
+                    "line": 46,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\n\n@Component({\n  selector: 'storybook-button',\n  template: ` <button\n    type=\"button\"\n    (click)=\"onClick.emit($event)\"\n    [ngClass]=\"classes\"\n    [ngStyle]=\"{ 'background-color': backgroundColor }\"\n  >\n    {{ label }}\n  </button>`,\n  styleUrls: ['./button.css'],\n})\nexport default class ButtonComponent {\n  /**\n   * Is this the principal call to action on the page?\n   */\n  @Input()\n  primary = false;\n\n  /**\n   * What background color to use\n   */\n  @Input()\n  backgroundColor?: string;\n\n  /**\n   * How large should the button be?\n   */\n  @Input()\n  size: 'small' | 'medium' | 'large' = 'medium';\n\n  /**\n   * Button contents\n   *\n   * @required\n   */\n  @Input()\n  label = 'Button';\n\n  /**\n   * Optional click handler\n   */\n  @Output()\n  onClick = new EventEmitter<Event>();\n\n  public get classes(): string[] {\n    const mode = this.primary ? 'storybook-button--primary' : 'storybook-button--secondary';\n\n    return ['storybook-button', `storybook-button--${this.size}`, mode];\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".storybook-button {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-weight: 700;\n  border: 0;\n  border-radius: 3em;\n  cursor: pointer;\n  display: inline-block;\n  line-height: 1;\n}\n.storybook-button--primary {\n  color: white;\n  background-color: #1ea7fd;\n}\n.storybook-button--secondary {\n  color: #333;\n  background-color: transparent;\n  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px inset;\n}\n.storybook-button--small {\n  font-size: 12px;\n  padding: 10px 16px;\n}\n.storybook-button--medium {\n  font-size: 14px;\n  padding: 11px 20px;\n}\n.storybook-button--large {\n  font-size: 16px;\n  padding: 12px 24px;\n}\n",
+                    "styleUrl": "./button.css"
+                }
+            ],
+            "stylesData": "",
+            "accessors": {
+                "classes": {
+                    "name": "classes",
+                    "getSignature": {
+                        "name": "classes",
+                        "type": "[]",
+                        "returnType": "string[]",
+                        "line": 48
+                    }
+                }
+            }
+        },
+        {
+            "name": "HeaderComponent",
+            "id": "component-HeaderComponent-246e2a69dc126a3bd76c6328dd3b93e2",
+            "file": "src/stories/header.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "storybook-header",
+            "styleUrls": [
+                "./header.css"
+            ],
+            "styles": [],
+            "template": "<header>    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          primary\n          size=\"small\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </header>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "user",
+                    "defaultValue": "null",
+                    "line": 53,
+                    "type": "unknown"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "onCreateAccount",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 62,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "onLogin",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 56,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "onLogout",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 59,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\n\n@Component({\n  selector: 'storybook-header',\n  template: `<header>\n    <div class=\"wrapper\">\n      <div>\n        <svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z\"\n              fill=\"#FFF\"\n            />\n            <path\n              d=\"M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z\"\n              fill=\"#555AB9\"\n            />\n            <path\n              d=\"M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z\"\n              fill=\"#91BAF8\"\n            />\n          </g>\n        </svg>\n        <h1>Acme</h1>\n      </div>\n      <div>\n        <storybook-button\n          *ngIf=\"user\"\n          size=\"small\"\n          (onClick)=\"onLogout.emit($event)\"\n          label=\"Log out\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          size=\"small\"\n          (onClick)=\"onLogin.emit($event)\"\n          label=\"Log in\"\n        ></storybook-button>\n        <storybook-button\n          *ngIf=\"!user\"\n          primary\n          size=\"small\"\n          (onClick)=\"onCreateAccount.emit($event)\"\n          label=\"Sign up\"\n        ></storybook-button>\n      </div>\n    </div>\n  </header>`,\n  styleUrls: ['./header.css'],\n})\nexport default class HeaderComponent {\n  @Input()\n  user: unknown = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".wrapper {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  border-bottom: 1px solid rgba(0, 0, 0, 0.1);\n  padding: 15px 20px;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n}\n\nsvg {\n  display: inline-block;\n  vertical-align: top;\n}\n\nh1 {\n  font-weight: 900;\n  font-size: 20px;\n  line-height: 1;\n  margin: 6px 0 6px 10px;\n  display: inline-block;\n  vertical-align: top;\n}\n\nbutton + button {\n  margin-left: 10px;\n}\n",
+                    "styleUrl": "./header.css"
+                }
+            ],
+            "stylesData": ""
+        },
+        {
+            "name": "LandingComponent",
+            "id": "component-LandingComponent-311762bfa707ff26e30eb1cfb8923309",
+            "file": "src/app/components/landing/landing.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-landing",
+            "styleUrls": [
+                "./landing.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./landing.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "errorMessage",
+                    "defaultValue": "null",
+                    "type": "null",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "getState",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "isAuthenticated",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
+                    "name": "isDarktheme",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 24
+                },
+                {
+                    "name": "offer",
+                    "defaultValue": "new Offer()",
+                    "type": "Offer",
+                    "optional": false,
+                    "description": "",
+                    "line": 23
+                },
+                {
+                    "name": "offers",
+                    "type": "Offer[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 22
+                },
+                {
+                    "name": "user",
+                    "defaultValue": "null",
+                    "type": "null",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "deleteOffer",
+                    "args": [
+                        {
+                            "name": "offer",
+                            "type": "Offer"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 49,
+                    "jsdoctags": [
+                        {
+                            "name": "offer",
+                            "type": "Offer",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "logOut",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 44
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 31
+                },
+                {
+                    "name": "toggleTheme",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 54
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { GetOffer, DeleteOffer } from './../../offer-store/actions/offer.actions';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { LogOut } from '../../store/actions/auth.actions';\nimport { Observable } from 'rxjs';\nimport { Router } from '@angular/router';\nimport { OfferService } from '../../services/offer.service';\nimport { Offer } from 'src/app/models/offer.model';\n\n@Component({\n  selector: 'app-landing',\n  templateUrl: './landing.component.html',\n  styleUrls: ['./landing.component.scss']\n})\nexport class LandingComponent implements OnInit {\n  getState: Observable<any>;\n  isAuthenticated: false;\n  user = null;\n  errorMessage = null;\n  offers: Offer[];\n  offer: Offer = new Offer();\n  isDarktheme: boolean;\n\n  constructor(private store: Store<AppState>\n  ) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit() {\n    this.getState.subscribe((state) => {\n      this.isAuthenticated = state.isAuthenticated;\n      this.user = state.user;\n      this.errorMessage = state.errorMessage;\n    });\n\n    this.store.dispatch(new GetOffer());\n    this.store.subscribe(data => {\n      this.offers = data.offer.offer;\n    });\n  }\n\n  logOut(): void {\n    // tslint:disable-next-line: new-parens\n    this.store.dispatch(new LogOut);\n  }\n\n  deleteOffer(offer: Offer): void {\n    this.store.dispatch(new DeleteOffer(offer.id));\n    this.store.dispatch(new GetOffer());\n  }\n\n  toggleTheme(): void {\n    this.isDarktheme = !this.isDarktheme;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".logindiv {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.toggleButton {\r\n    margin-left: 48%;\r\n}",
+                    "styleUrl": "./landing.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>"
+                    }
+                ],
+                "line": 24,
+                "jsdoctags": [
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div>\n    <div [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n        <h1>Shopping Offers</h1>\n        <h5>Welcome to the world of offers!</h5>\n        <button class=\"action-button toggleButton\" (click)=\"toggleTheme()\">Toggle Theme</button>\n        <hr><br>\n        <div *ngIf=\"isAuthenticated; then doSomething; else doSomethingElse;\"></div>\n        <ng-template #doSomething>\n            <p>You logged in <em>{{user.email}}!</em></p>\n            <button tabindex=\"4\" aria-label=\"Logout\" class=\"action-button\" (click)=\"logOut()\">Log out</button>\n        </ng-template>\n        <ng-template #doSomethingElse>\n            <div class=\"logindiv\">\n                <button tabindex=\"1\" aria-label=\"Login\" [routerLink]=\"['/login']\" class=\"action-button\">Log\n                    In</button>\n                <button tabindex=\"2\" aria-label=\"Register\" [routerLink]=\"['/register']\" class=\"action-button\">Register</button>\n            </div>\n        </ng-template>\n    </div>\n\n    <div class=\"offer-container\">\n        <h2> Offer Details</h2>\n        <button tabindex=\"3\" aria-label=\"AddOffer\" class=\"action-button\" *ngIf=\"isAuthenticated\" [routerLink]=\"['add-offer']\">Add Offer</button>\n        <table class=\"table table-striped\" id=\"offerTable\" [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n            <thead>\n                <tr>\n                    <th>Id</th>\n                    <th>Title</th>\n                    <th>Category</th>\n                    <th *ngIf=\"isAuthenticated\">Action</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let offer of offers\">\n                    <td tabindex=\"0\">{{offer.id}}</td>\n                    <td tabindex=\"0\">{{offer.title}}</td>\n                    <td tabindex=\"0\">{{offer.category}}</td>\n                    <td *ngIf=\"isAuthenticated\">\n                        <button tabindex=\"0\" aria-label=\"Edit\" class=\"action-button\" [routerLink]=\"['/offers/', offer.id, 'edit-offer']\">\n                            Edit</button>\n                        <button tabindex=\"0\" aria-label=\"Delete\" class=\"action-button\" (click)=\"deleteOffer(offer)\">\n                            Delete</button>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n\n</div>"
+        },
+        {
+            "name": "LoginComponent",
+            "id": "component-LoginComponent-c99f3728f2006e6c7e4685fd0df49ef7",
+            "file": "src/app/components/login/login.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-login",
+            "styleUrls": [
+                "./login.component.scss"
+            ],
+            "styles": [],
+            "templateUrl": [
+                "./login.component.html"
+            ],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "errorMessage",
+                    "type": "string | null",
+                    "optional": false,
+                    "description": "",
+                    "line": 19
+                },
+                {
+                    "name": "getState",
+                    "type": "Observable<any>",
+                    "optional": false,
+                    "description": "",
+                    "line": 18
+                },
+                {
+                    "name": "loginRegisterForm",
+                    "type": "FormGroup",
+                    "optional": false,
+                    "description": "",
+                    "line": 21
+                },
+                {
+                    "name": "showLogin",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 20
+                },
+                {
+                    "name": "user",
+                    "defaultValue": "new User()",
+                    "type": "User",
+                    "optional": false,
+                    "description": "",
+                    "line": 17
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "createLoginRegister",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42
+                },
+                {
+                    "name": "loginOrRegister",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 49
+                },
+                {
+                    "name": "ngOnInit",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 27
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { User } from '../../models/user';\nimport { LogIn, Register } from '../../store/actions/auth.actions';\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { Observable } from 'rxjs';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { FormGroup, FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent implements OnInit {\n  user: User = new User();\n  getState: Observable<any>;\n  errorMessage: string | null;\n  showLogin: boolean;\n  loginRegisterForm: FormGroup;\n\n  constructor(private route: ActivatedRoute, private store: Store<AppState>, private router: Router) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit(): void {\n    this.createLoginRegister();\n    this.getState.subscribe((state) => {\n      this.errorMessage = state.errorMessage;\n    });\n    this.errorMessage = null;\n    this.route.data.subscribe((params) => {\n      if (params && params.isLogin) {\n        this.showLogin = params.isLogin;\n      } else {\n        this.showLogin = false;\n      }\n    });\n  }\n\n  createLoginRegister(): void {\n    this.loginRegisterForm = new FormGroup({\n      email: new FormControl(''),\n      password: new FormControl(''),\n    });\n  }\n\n  loginOrRegister(): void {\n    if (this.showLogin) {\n      this.store.dispatch(new LogIn(this.user));\n    } else {\n      this.store.dispatch(new Register(this.user));\n    }\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": ".loginForm {\r\n    display: grid;\r\n    justify-content: center;\r\n}\r\n\r\n#email {\r\n    margin: 15px 0px 20px 43px;\r\n}\r\n\r\n#password {\r\n    margin: 15px 0px 20px 20px;\r\n}\r\n\r\n.submit {\r\n    margin-left: 12px !important;\r\n}\r\n\r\n.cancel {\r\n    margin-left: 90px !important;\r\n}",
+                    "styleUrl": "./login.component.scss"
+                }
+            ],
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute"
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>"
+                    },
+                    {
+                        "name": "router",
+                        "type": "Router"
+                    }
+                ],
+                "line": 21,
+                "jsdoctags": [
+                    {
+                        "name": "route",
+                        "type": "ActivatedRoute",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "store",
+                        "type": "Store<AppState>",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "router",
+                        "type": "Router",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnInit"
+            ],
+            "templateData": "<div>\n    <h2 *ngIf=\"showLogin\">Login</h2>\n    <h2 *ngIf=\"!showLogin\">Register</h2>\n    <hr><br>\n    <div *ngIf=\"errorMessage\">\n        <div class=\"alert alert-danger\" role=\"alert\">\n            {{errorMessage}}\n        </div>\n    </div>\n    <form ngNativeValidate class=\"loginForm\">\n        <div class=\"form-group\">\n            <label for=\"email\">Email</label>\n            <input tabindex=\"1\" [(ngModel)]=\"user.email\" name=\"email\" type=\"email\" required class=\"form-control\" id=\"email\" placeholder=\"Enter your email\">\n        </div>\n        <div class=\"form-group\">\n            <label for=\"password\">Password</label>\n            <input tabindex=\"2\" [(ngModel)]=\"user.password\" name=\"password\" type=\"password\" required class=\"form-control\" id=\"password\" placeholder=\"Enter a password\">\n        </div>\n        <div>\n            <button tabindex=\"3\" aria-label=\"Submit\" type=\"submit\" class=\"action-button submit\" (click)=\"loginOrRegister()\">\n                <span *ngIf=\"!showLogin\">Register</span>\n                <span *ngIf=\"showLogin\">Login</span>\n            </button>\n            <button tabindex=\"4\" aria-label=\"Cancel\" type=\"cancel\" class=\"action-button cancel\" [routerLink]=\"['/']\">Cancel</button>\n        </div>\n    </form>\n    <p>\n        <span>Don't have an account?&nbsp;</span>\n        <a *ngIf=\"showLogin\" tabindex=\"5\" [routerLink]=\"['/register']\">Register!</a>\n        <a *ngIf=\"!showLogin\" tabindex=\"5\" [routerLink]=\"['/login']\">Login!</a>\n    </p>\n</div>"
+        },
+        {
+            "name": "PageComponent",
+            "id": "component-PageComponent-cca1a8911321fa17756ce90c90de65cc",
+            "file": "src/stories/page.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "storybook-page",
+            "styleUrls": [
+                "./page.css"
+            ],
+            "styles": [],
+            "template": "<article>    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"onLogout.emit($event)\"\n      (onLogin)=\"onLogin.emit($event)\"\n      (onCreateAccount)=\"onCreateAccount.emit($event)\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://www.learnstorybook.com\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Learn Storybook\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\">\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "user",
+                    "defaultValue": "null",
+                    "line": 66,
+                    "type": "unknown"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "onCreateAccount",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 75,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "onLogin",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 69,
+                    "type": "EventEmitter"
+                },
+                {
+                    "name": "onLogout",
+                    "defaultValue": "new EventEmitter<Event>()",
+                    "line": 72,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input, Output, EventEmitter } from '@angular/core';\n\n@Component({\n  selector: 'storybook-page',\n  template: `<article>\n    <storybook-header\n      [user]=\"user\"\n      (onLogout)=\"onLogout.emit($event)\"\n      (onLogin)=\"onLogin.emit($event)\"\n      (onCreateAccount)=\"onCreateAccount.emit($event)\"\n    ></storybook-header>\n    <section>\n      <h2>Pages in Storybook</h2>\n      <p>\n        We recommend building UIs with a\n        <a href=\"https://componentdriven.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n          <strong>component-driven</strong>\n        </a>\n        process starting with atomic components and ending with pages.\n      </p>\n      <p>\n        Render pages with mock data. This makes it easy to build and review page states without\n        needing to navigate to them in your app. Here are some handy patterns for managing page data\n        in Storybook:\n      </p>\n      <ul>\n        <li>\n          Use a higher-level connected component. Storybook helps you compose such data from the\n          \"args\" of child component stories\n        </li>\n        <li>\n          Assemble data in the page component from your services. You can mock these services out\n          using Storybook.\n        </li>\n      </ul>\n      <p>\n        Get a guided tutorial on component-driven development at\n        <a href=\"https://www.learnstorybook.com\" target=\"_blank\" rel=\"noopener noreferrer\">\n          Learn Storybook\n        </a>\n        . Read more in the\n        <a href=\"https://storybook.js.org/docs\" target=\"_blank\" rel=\"noopener noreferrer\">\n          docs\n        </a>\n        .\n      </p>\n      <div class=\"tip-wrapper\">\n        <span class=\"tip\">Tip</span> Adjust the width of the canvas with the\n        <svg width=\"10\" height=\"10\" viewBox=\"0 0 12 12\" xmlns=\"http://www.w3.org/2000/svg\">\n          <g fill=\"none\" fillRule=\"evenodd\">\n            <path\n              d=\"M1.5 5.2h4.8c.3 0 .5.2.5.4v5.1c-.1.2-.3.3-.4.3H1.4a.5.5 0 01-.5-.4V5.7c0-.3.2-.5.5-.5zm0-2.1h6.9c.3 0 .5.2.5.4v7a.5.5 0 01-1 0V4H1.5a.5.5 0 010-1zm0-2.1h9c.3 0 .5.2.5.4v9.1a.5.5 0 01-1 0V2H1.5a.5.5 0 010-1zm4.3 5.2H2V10h3.8V6.2z\"\n              id=\"a\"\n              fill=\"#999\"\n            />\n          </g>\n        </svg>\n        Viewports addon in the toolbar\n      </div>\n    </section>\n  </article>`,\n  styleUrls: ['./page.css'],\n})\nexport default class PageComponent {\n  @Input()\n  user: unknown = null;\n\n  @Output()\n  onLogin = new EventEmitter<Event>();\n\n  @Output()\n  onLogout = new EventEmitter<Event>();\n\n  @Output()\n  onCreateAccount = new EventEmitter<Event>();\n}\n\n// export const Page = ({ user, onLogin, onLogout, onCreateAccount }) => (\n//   <article>\n//     <Header user={user} onLogin={onLogin} onLogout={onLogout} onCreateAccount={onCreateAccount} />\n\n// );\n// Page.propTypes = {\n//   user: PropTypes.shape({}),\n//   onLogin: PropTypes.func.isRequired,\n//   onLogout: PropTypes.func.isRequired,\n//   onCreateAccount: PropTypes.func.isRequired,\n// };\n\n// Page.defaultProps = {\n//   user: null,\n// };\n",
+            "assetsDirs": [],
+            "styleUrlsData": [
+                {
+                    "data": "section {\n  font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  font-size: 14px;\n  line-height: 24px;\n  padding: 48px 20px;\n  margin: 0 auto;\n  max-width: 600px;\n  color: #333;\n}\n\nh2 {\n  font-weight: 900;\n  font-size: 32px;\n  line-height: 1;\n  margin: 0 0 4px;\n  display: inline-block;\n  vertical-align: top;\n}\n\np {\n  margin: 1em 0;\n}\n\na {\n  text-decoration: none;\n  color: #1ea7fd;\n}\n\nul {\n  padding-left: 30px;\n  margin: 1em 0;\n}\n\nli {\n  margin-bottom: 8px;\n}\n\n.tip {\n  display: inline-block;\n  border-radius: 1em;\n  font-size: 11px;\n  line-height: 12px;\n  font-weight: 700;\n  background: #e7fdd8;\n  color: #66bf3c;\n  padding: 4px 12px;\n  margin-right: 10px;\n  vertical-align: top;\n}\n\n.tip-wrapper {\n  font-size: 13px;\n  line-height: 20px;\n  margin-top: 40px;\n  margin-bottom: 40px;\n}\n\n.tip-wrapper svg {\n  display: inline-block;\n  height: 12px;\n  width: 12px;\n  margin-right: 4px;\n  vertical-align: top;\n  margin-top: 3px;\n}\n\n.tip-wrapper svg path {\n  fill: #1ea7fd;\n}\n",
+                    "styleUrl": "./page.css"
+                }
+            ],
+            "stylesData": ""
+        }
+    ],
+    "modules": [
+        {
+            "name": "AppModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": [
+                        {
+                            "name": "AuthService"
+                        },
+                        {
+                            "name": "OfferService"
+                        }
+                    ]
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "AddEditOfferComponent"
+                        },
+                        {
+                            "name": "AppComponent"
+                        },
+                        {
+                            "name": "LandingComponent"
+                        },
+                        {
+                            "name": "LoginComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "AppRoutingModule"
+                        },
+                        {
+                            "name": "AppRoutingModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": [
+                        {
+                            "name": "AppComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "AppRoutingModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": []
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": []
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "ADD_OFFER",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Add Offer'"
+            },
+            {
+                "name": "ADD_SUCCESS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Add Success'"
+            },
+            {
+                "name": "DELETE_OFFER",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Delete Offer'"
+            },
+            {
+                "name": "DELETE_SUCCESS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Delete Success'"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.prod.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: true\n}"
+            },
+            {
+                "name": "environment",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/environments/environment.ts",
+                "type": "object",
+                "defaultValue": "{\n  production: false,\n  baseURL: 'http://localhost:3000/',\n}"
+            },
+            {
+                "name": "GET_OFFER",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Get Offer'"
+            },
+            {
+                "name": "initialState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/reducers/offer.reducers.ts",
+                "type": "State",
+                "defaultValue": "{\r\n    offer: [],\r\n    message: null,\r\n    success: null\r\n}"
+            },
+            {
+                "name": "initialState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/reducers/auth.reducers.ts",
+                "type": "State",
+                "defaultValue": "{\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n}"
+            },
+            {
+                "name": "Large",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LOAD_OFFER",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Load Offer'"
+            },
+            {
+                "name": "LoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LoggedIn",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Page.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LoggedOut",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "LoggedOut",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Page.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Login",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/login.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Primary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "reducers",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/app.states.ts",
+                "type": "object",
+                "defaultValue": "{\r\n    auth: auth.reducer,\r\n    offer: offer.reducer\r\n\r\n}"
+            },
+            {
+                "name": "Secondary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "selectAuthState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/app.states.ts",
+                "type": "",
+                "defaultValue": "createFeatureSelector<AppState>('auth')"
+            },
+            {
+                "name": "selectOfferState",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/store/app.states.ts",
+                "type": "",
+                "defaultValue": "createFeatureSelector<AppState>('offer')"
+            },
+            {
+                "name": "Small",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Button.stories.ts",
+                "type": "Story<Button>",
+                "defaultValue": "(args: Button) => ({\n  component: Button,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Header.stories.ts",
+                "type": "Story<Header>",
+                "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/login.stories.ts",
+                "type": "Story<LoginComponent>",
+                "defaultValue": "() => ({\r\n    component: LoginComponent,\r\n    template: '<app-login></app-login>',\r\n    moduleMetadata: {\r\n        imports: [],\r\n        declarations: [],\r\n        providers: []\r\n    }\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Page.stories.ts",
+                "type": "Story<Page>",
+                "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+            },
+            {
+                "name": "UPDATE_OFFER",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Update Offer'"
+            },
+            {
+                "name": "UPDATE_SUCCESS",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "string",
+                "defaultValue": "'[Offer] Update Success'"
+            }
+        ],
+        "functions": [
+            {
+                "name": "reducer",
+                "file": "src/app/offer-store/reducers/offer.reducers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": ""
+                    },
+                    {
+                        "name": "action"
+                    }
+                ],
+                "returnType": "State",
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "reducer",
+                "file": "src/app/store/reducers/auth.reducers.ts",
+                "ctype": "miscellaneous",
+                "subtype": "function",
+                "description": "",
+                "args": [
+                    {
+                        "name": "state",
+                        "type": ""
+                    },
+                    {
+                        "name": "action"
+                    }
+                ],
+                "returnType": "State",
+                "jsdoctags": [
+                    {
+                        "name": "state",
+                        "type": "",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "action",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        ],
+        "typealiases": [
+            {
+                "name": "All",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "GetOffer | AddOffer | UpdateOffer | DeleteOffer | LoadOffersSuccess | AddOffersSuccess | UpdateOffersSuccess | DeleteOffersSuccess",
+                "file": "src/app/offer-store/actions/offer.actions.ts",
+                "description": "",
+                "kind": 168
+            },
+            {
+                "name": "All",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "LogIn | LogInSuccess | LogInFailure | Register | RegisterSuccess | RegisterFailure | LogOut",
+                "file": "src/app/store/actions/auth.actions.ts",
+                "description": "",
+                "kind": 168
+            }
+        ],
+        "enumerations": [
+            {
+                "name": "AuthActionTypes",
+                "childs": [
+                    {
+                        "name": "LOGIN",
+                        "value": "[Auth] Login"
+                    },
+                    {
+                        "name": "LOGIN_SUCCESS",
+                        "value": "[Auth] Login Success"
+                    },
+                    {
+                        "name": "LOGIN_FAILURE",
+                        "value": "[Auth] Login Failure"
+                    },
+                    {
+                        "name": "REGISTER",
+                        "value": "[Auth] Register"
+                    },
+                    {
+                        "name": "REGISTER_SUCCESS",
+                        "value": "[Auth] Signup Success"
+                    },
+                    {
+                        "name": "REGISTER_FAILURE",
+                        "value": "[Auth] Signup Failure"
+                    },
+                    {
+                        "name": "LOGOUT",
+                        "value": "[Auth] Logout"
+                    }
+                ],
+                "ctype": "miscellaneous",
+                "subtype": "enum",
+                "description": "",
+                "file": "src/app/store/actions/auth.actions.ts"
+            }
+        ],
+        "groupedVariables": {
+            "src/app/offer-store/actions/offer.actions.ts": [
+                {
+                    "name": "ADD_OFFER",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Add Offer'"
+                },
+                {
+                    "name": "ADD_SUCCESS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Add Success'"
+                },
+                {
+                    "name": "DELETE_OFFER",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Delete Offer'"
+                },
+                {
+                    "name": "DELETE_SUCCESS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Delete Success'"
+                },
+                {
+                    "name": "GET_OFFER",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Get Offer'"
+                },
+                {
+                    "name": "LOAD_OFFER",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Load Offer'"
+                },
+                {
+                    "name": "UPDATE_OFFER",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Update Offer'"
+                },
+                {
+                    "name": "UPDATE_SUCCESS",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "type": "string",
+                    "defaultValue": "'[Offer] Update Success'"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: true\n}"
+                }
+            ],
+            "src/environments/environment.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: false,\n  baseURL: 'http://localhost:3000/',\n}"
+                }
+            ],
+            "src/app/offer-store/reducers/offer.reducers.ts": [
+                {
+                    "name": "initialState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/offer-store/reducers/offer.reducers.ts",
+                    "type": "State",
+                    "defaultValue": "{\r\n    offer: [],\r\n    message: null,\r\n    success: null\r\n}"
+                }
+            ],
+            "src/app/store/reducers/auth.reducers.ts": [
+                {
+                    "name": "initialState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/reducers/auth.reducers.ts",
+                    "type": "State",
+                    "defaultValue": "{\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n}"
+                }
+            ],
+            "src/stories/Button.stories.ts": [
+                {
+                    "name": "Large",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Primary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Secondary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Small",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Button.stories.ts",
+                    "type": "Story<Button>",
+                    "defaultValue": "(args: Button) => ({\n  component: Button,\n  props: args,\n})"
+                }
+            ],
+            "src/stories/Header.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Header.stories.ts",
+                    "type": "Story<Header>",
+                    "defaultValue": "(args: Header) => ({\n  component: Header,\n  props: args,\n})"
+                }
+            ],
+            "src/stories/Page.stories.ts": [
+                {
+                    "name": "LoggedIn",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "LoggedOut",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Page.stories.ts",
+                    "type": "Story<Page>",
+                    "defaultValue": "(args: Page) => ({\n  component: Page,\n  props: args,\n})"
+                }
+            ],
+            "src/stories/login.stories.ts": [
+                {
+                    "name": "Login",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/login.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/login.stories.ts",
+                    "type": "Story<LoginComponent>",
+                    "defaultValue": "() => ({\r\n    component: LoginComponent,\r\n    template: '<app-login></app-login>',\r\n    moduleMetadata: {\r\n        imports: [],\r\n        declarations: [],\r\n        providers: []\r\n    }\r\n})"
+                }
+            ],
+            "src/app/store/app.states.ts": [
+                {
+                    "name": "reducers",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/app.states.ts",
+                    "type": "object",
+                    "defaultValue": "{\r\n    auth: auth.reducer,\r\n    offer: offer.reducer\r\n\r\n}"
+                },
+                {
+                    "name": "selectAuthState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/app.states.ts",
+                    "type": "",
+                    "defaultValue": "createFeatureSelector<AppState>('auth')"
+                },
+                {
+                    "name": "selectOfferState",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/app/store/app.states.ts",
+                    "type": "",
+                    "defaultValue": "createFeatureSelector<AppState>('offer')"
+                }
+            ]
+        },
+        "groupedFunctions": {
+            "src/app/offer-store/reducers/offer.reducers.ts": [
+                {
+                    "name": "reducer",
+                    "file": "src/app/offer-store/reducers/offer.reducers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": ""
+                        },
+                        {
+                            "name": "action"
+                        }
+                    ],
+                    "returnType": "State",
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "action",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "src/app/store/reducers/auth.reducers.ts": [
+                {
+                    "name": "reducer",
+                    "file": "src/app/store/reducers/auth.reducers.ts",
+                    "ctype": "miscellaneous",
+                    "subtype": "function",
+                    "description": "",
+                    "args": [
+                        {
+                            "name": "state",
+                            "type": ""
+                        },
+                        {
+                            "name": "action"
+                        }
+                    ],
+                    "returnType": "State",
+                    "jsdoctags": [
+                        {
+                            "name": "state",
+                            "type": "",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "action",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "groupedEnumerations": {
+            "src/app/store/actions/auth.actions.ts": [
+                {
+                    "name": "AuthActionTypes",
+                    "childs": [
+                        {
+                            "name": "LOGIN",
+                            "value": "[Auth] Login"
+                        },
+                        {
+                            "name": "LOGIN_SUCCESS",
+                            "value": "[Auth] Login Success"
+                        },
+                        {
+                            "name": "LOGIN_FAILURE",
+                            "value": "[Auth] Login Failure"
+                        },
+                        {
+                            "name": "REGISTER",
+                            "value": "[Auth] Register"
+                        },
+                        {
+                            "name": "REGISTER_SUCCESS",
+                            "value": "[Auth] Signup Success"
+                        },
+                        {
+                            "name": "REGISTER_FAILURE",
+                            "value": "[Auth] Signup Failure"
+                        },
+                        {
+                            "name": "LOGOUT",
+                            "value": "[Auth] Logout"
+                        }
+                    ],
+                    "ctype": "miscellaneous",
+                    "subtype": "enum",
+                    "description": "",
+                    "file": "src/app/store/actions/auth.actions.ts"
+                }
+            ]
+        },
+        "groupedTypeAliases": {
+            "src/app/offer-store/actions/offer.actions.ts": [
+                {
+                    "name": "All",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "GetOffer | AddOffer | UpdateOffer | DeleteOffer | LoadOffersSuccess | AddOffersSuccess | UpdateOffersSuccess | DeleteOffersSuccess",
+                    "file": "src/app/offer-store/actions/offer.actions.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ],
+            "src/app/store/actions/auth.actions.ts": [
+                {
+                    "name": "All",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "LogIn | LogInSuccess | LogInFailure | Register | RegisterSuccess | RegisterFailure | LogOut",
+                    "file": "src/app/store/actions/auth.actions.ts",
+                    "description": "",
+                    "kind": 168
+                }
+            ]
+        }
+    },
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "className": "AppModule",
+        "children": [
+            {
+                "name": "routes",
+                "filename": "src/app/app-routing.module.ts",
+                "module": "AppRoutingModule",
+                "children": [
+                    {
+                        "path": "login",
+                        "component": "LoginComponent",
+                        "data": {
+                            "isLogin": true
+                        }
+                    },
+                    {
+                        "path": "register",
+                        "component": "LoginComponent"
+                    },
+                    {
+                        "path": "",
+                        "component": "LandingComponent"
+                    },
+                    {
+                        "path": "add-offer",
+                        "component": "AddEditOfferComponent"
+                    },
+                    {
+                        "path": "offers/:offerId/edit-offer",
+                        "component": "AddEditOfferComponent",
+                        "data": {
+                            "isUpdate": true
+                        }
+                    },
+                    {
+                        "path": "**",
+                        "redirectTo": "/"
+                    }
+                ],
+                "kind": "module"
+            }
+        ]
+    },
+    "coverage": {
+        "count": 1,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "e2e/src/app.po.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "AppPage",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/app.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AppComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/add-edit-offer/add-edit-offer.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "AddEditOfferComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/11",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/landing/landing.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LandingComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/13",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/login/login.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "LoginComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/models/offer.model.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "Offer",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/models/user.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "User",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "AddOffer",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "AddOffersSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "DeleteOffer",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "DeleteOffersSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "GetOffer",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "LoadOffersSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "UpdateOffer",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "UpdateOffersSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ADD_OFFER",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "ADD_SUCCESS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DELETE_OFFER",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "DELETE_SUCCESS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "GET_OFFER",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LOAD_OFFER",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "UPDATE_OFFER",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/actions/offer.actions.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "UPDATE_SUCCESS",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/effects/offer.effects.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "OfferEffects",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/reducers/offer.reducers.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "State",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/reducers/offer.reducers.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "reducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/offer-store/reducers/offer.reducers.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/services/auth.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "AuthService",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/services/offer.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "OfferService",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "LogIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "LogInFailure",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "LogInSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "LogOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "Register",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "RegisterFailure",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/actions/auth.actions.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "RegisterSuccess",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/app.states.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "AppState",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/app.states.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "reducers",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/app.states.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectAuthState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/app.states.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "selectOfferState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/effects/auth.effects.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "AuthEffects",
+                "coveragePercent": 0,
+                "coverageCount": "0/9",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/reducers/auth.reducers.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "State",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/reducers/auth.reducers.ts",
+                "type": "function",
+                "linksubtype": "function",
+                "name": "reducer",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/store/reducers/auth.reducers.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "initialState",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/environments/environment.prod.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "environment",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/environments/environment.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "environment",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Large",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Primary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Secondary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Small",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Header.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedIn",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "LoggedOut",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Page.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonComponent",
+                "coveragePercent": 83,
+                "coverageCount": "5/6",
+                "status": "very-good"
+            },
+            {
+                "filePath": "src/stories/header.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "HeaderComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/login.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Login",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/login.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/page.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "PageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/5",
+                "status": "low"
+            }
+        ]
+    }
+}

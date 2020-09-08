@@ -1,0 +1,25 @@
+<div>
+    <h2 *ngIf="!showUpdate">Add Offer</h2>
+    <h2 *ngIf="showUpdate">Update Offer</h2>
+    <hr><br>
+    <form [formGroup]="addForm" class="addNewOffer">
+        <div>
+            <label for="id">Id: </label>
+            <input type="text" formControlName="id" placeholder="id" name="id" class="form-control" id="id">
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input tabindex="1" formControlName="title" placeholder="Title" name="title" class="form-control" id="title">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <input tabindex="2" formControlName="category" placeholder="Category" name="category" class="form-control" id="category">
+        </div>
+    </form>
+    <button tabindex="3" aria-label="Add-Edit" class="action-button addNew" (click)="navigateToAddorEdit()">
+        <span *ngIf="!showUpdate">Add</span>
+        <span *ngIf="showUpdate">Update</span>
+    </button>
+</div>

@@ -37,7 +37,7 @@ export class AddEditOfferComponent implements OnInit {
     }
     this.addEditForm(this.offer);
     this.store.subscribe((data) => {
-      if (data) {
+      if (data && data.offer) {
         if (data.offer.success) {
           this.addForm.reset();
         }

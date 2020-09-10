@@ -30,14 +30,18 @@ export class LandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getState.subscribe((state) => {
-      this.isAuthenticated = state.isAuthenticated;
-      this.user = state.user;
-      this.errorMessage = state.errorMessage;
+      if (state && state.isAuthenticated) {
+        this.isAuthenticated = state.isAuthenticated;
+        this.user = state.user;
+        this.errorMessage = state.errorMessage;
+      }
     });
 
     this.store.dispatch(new GetOffer());
     this.store.subscribe(data => {
-      this.offers = data.offer.offer;
+      if (data && data.offer) {
+        this.offers = data.offer.offer;
+      }
     });
   }
 

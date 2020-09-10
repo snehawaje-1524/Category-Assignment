@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.createLoginRegister();
     this.getState.subscribe((state) => {
-      this.errorMessage = state.errorMessage;
+      if (state && state.errorMessage) {
+        this.errorMessage = state.errorMessage;
+      }
     });
     this.errorMessage = null;
     this.route.data.subscribe((params) => {

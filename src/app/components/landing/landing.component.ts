@@ -30,7 +30,7 @@ export class LandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.getState.subscribe((state) => {
-      if (state && state.isAuthenticated) {
+      if (state) {
         this.isAuthenticated = state.isAuthenticated;
         this.user = state.user;
         this.errorMessage = state.errorMessage;

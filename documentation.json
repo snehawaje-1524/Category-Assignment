@@ -62,10 +62,10 @@
         },
         {
             "name": "State",
-            "id": "interface-State-ff6153f601b48460e21b23f2d30aaaaf-1",
+            "id": "interface-State-dbbd9aff41fb1c315362279b9444bc81-1",
             "file": "src/app/store/reducers/auth.reducers.ts",
             "type": "interface",
-            "sourceCode": "import { User } from '../../models/user';\r\nimport { AuthActionTypes, All } from '../actions/auth.actions';\r\n\r\n\r\nexport interface State {\r\n    isAuthenticated: boolean;\r\n    user: User | null;\r\n    errorMessage: string | null;\r\n}\r\n\r\nexport const initialState: State = {\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n};\r\n\r\nexport function reducer(state = initialState, action: All): State {\r\n    switch (action.type) {\r\n        case AuthActionTypes.LOGIN_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGIN_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'Incorrect email and/or password.'\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'That email is already in use.'\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGOUT: {\r\n            return initialState;\r\n        }\r\n        default: {\r\n            return state;\r\n        }\r\n    }\r\n}",
+            "sourceCode": "import { User } from '../../models/user';\r\nimport { AuthActionTypes, All } from '../actions/auth.actions';\r\n\r\n\r\nexport interface State {\r\n    isAuthenticated: boolean;\r\n    user: User | null;\r\n    errorMessage: string | null;\r\n}\r\n\r\nexport const initialState: State = {\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n};\r\n\r\nexport function reducer(state = initialState, action: All): State {\r\n    switch (action.type) {\r\n        case AuthActionTypes.LOGIN_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGIN_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'Incorrect email and/or password.'\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_SUCCESS: {\r\n            return {\r\n                ...state,\r\n                isAuthenticated: true,\r\n                user: {\r\n                    email: action.payload.email\r\n                },\r\n                errorMessage: null\r\n            };\r\n        }\r\n        case AuthActionTypes.REGISTER_FAILURE: {\r\n            return {\r\n                ...state,\r\n                errorMessage: 'That email is already in use.'\r\n            };\r\n        }\r\n        case AuthActionTypes.LOGOUT: {\r\n            return initialState;\r\n        }\r\n        default: {\r\n            return state;\r\n        }\r\n    }\r\n}\r\n",
             "properties": [
                 {
                     "name": "errorMessage",
@@ -100,7 +100,7 @@
     "injectables": [
         {
             "name": "AuthEffects",
-            "id": "injectable-AuthEffects-8036aa11e7ddf7736928b217447c0eda",
+            "id": "injectable-AuthEffects-409b73f95f093f5e04ccba1a7233f6bc",
             "file": "src/app/store/effects/auth.effects.ts",
             "properties": [
                 {
@@ -207,7 +207,7 @@
             ],
             "methods": [],
             "description": "",
-            "sourceCode": "import { Injectable } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\nimport { Actions, Effect, ofType } from '@ngrx/effects';\r\nimport { Observable } from 'rxjs';\r\nimport { map, switchMap, tap } from 'rxjs/operators';\r\nimport { AuthService } from '../../services/auth.service';\r\nimport {\r\n    AuthActionTypes,\r\n    LogIn, LogInSuccess, LogInFailure,\r\n    Register, RegisterSuccess, RegisterFailure,\r\n    LogOut,\r\n} from '../actions/auth.actions';\r\n\r\n@Injectable()\r\nexport class AuthEffects {\r\n\r\n    constructor(\r\n        private actions: Actions,\r\n        private authService: AuthService,\r\n        private router: Router,\r\n    ) { }\r\n\r\n    @Effect()\r\n    LogIn: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN),\r\n        map((action: LogIn) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.login({ email: payload.email, password: payload.password }).pipe(\r\n                map((user) => {\r\n                    if (user.length > 0) {\r\n                        return new LogInSuccess({ email: payload.email });\r\n                    } else {\r\n                        return new LogInFailure({ error: 'Invalid credentials' });\r\n                    }\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_SUCCESS),\r\n        tap((user) => {\r\n            localStorage.setItem('user', JSON.stringify(user.payload));\r\n            this.router.navigateByUrl('/');\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_FAILURE)\r\n    );\r\n\r\n    @Effect()\r\n    Register: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER),\r\n        map((action: Register) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.register(payload).pipe(\r\n                map((result) => {\r\n                    return new RegisterSuccess(result);\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_SUCCESS),\r\n        tap((user) => {\r\n            this.router.navigate(['/login']);\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_FAILURE)\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    public LogOut: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGOUT),\r\n        tap((user) => {\r\n            localStorage.removeItem('token');\r\n        })\r\n    );\r\n}",
+            "sourceCode": "import { Injectable } from '@angular/core';\r\nimport { Router } from '@angular/router';\r\nimport { Actions, Effect, ofType } from '@ngrx/effects';\r\nimport { Observable } from 'rxjs';\r\nimport { map, switchMap, tap } from 'rxjs/operators';\r\nimport { AuthService } from '../../services/auth.service';\r\nimport {\r\n    AuthActionTypes,\r\n    LogIn, LogInSuccess, LogInFailure,\r\n    Register, RegisterSuccess, RegisterFailure,\r\n    LogOut,\r\n} from '../actions/auth.actions';\r\n\r\n@Injectable()\r\nexport class AuthEffects {\r\n\r\n    constructor(\r\n        private actions: Actions,\r\n        private authService: AuthService,\r\n        private router: Router,\r\n    ) { }\r\n\r\n    @Effect()\r\n    LogIn: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN),\r\n        map((action: LogIn) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.login({ email: payload.email, password: payload.password }).pipe(\r\n                map((user) => {\r\n                    if (user.length > 0) {\r\n                        return new LogInSuccess({ email: payload.email });\r\n                    } else {\r\n                        return new LogInFailure({ error: 'Invalid credentials' });\r\n                    }\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_SUCCESS),\r\n        tap((user) => {\r\n            localStorage.setItem('user', JSON.stringify(user.payload));\r\n            this.router.navigateByUrl('/');\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    LogInFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGIN_FAILURE)\r\n    );\r\n\r\n    @Effect()\r\n    Register: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER),\r\n        map((action: Register) => action.payload),\r\n        switchMap(payload => {\r\n            return this.authService.register(payload).pipe(\r\n                map((result) => {\r\n                    return new RegisterSuccess(result);\r\n                }));\r\n        }));\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterSuccess: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_SUCCESS),\r\n        tap((user) => {\r\n            this.router.navigate(['/login']);\r\n        })\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    RegisterFailure: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.REGISTER_FAILURE)\r\n    );\r\n\r\n    @Effect({ dispatch: false })\r\n    public LogOut: Observable<any> = this.actions.pipe(\r\n        ofType(AuthActionTypes.LOGOUT),\r\n        tap((user) => {\r\n            localStorage.removeItem('token');\r\n        })\r\n    );\r\n}\r\n",
             "constructorObj": {
                 "name": "constructor",
                 "description": "",
@@ -1503,10 +1503,10 @@
         },
         {
             "name": "User",
-            "id": "class-User-e39939a2a229b500a8dc08b0933ca3d0",
+            "id": "class-User-737e7cc5a284d4da9f2af9de48b84376",
             "file": "src/app/models/user.ts",
             "type": "class",
-            "sourceCode": "export class User {\r\n    id?: string;\r\n    email?: string;\r\n    password?: string;\r\n}",
+            "sourceCode": "export class User {\r\n    id?: string;\r\n    email?: string;\r\n    password?: string;\r\n}\r\n",
             "properties": [
                 {
                     "name": "email",
@@ -1542,7 +1542,7 @@
     "components": [
         {
             "name": "AddEditOfferComponent",
-            "id": "component-AddEditOfferComponent-91a404639fe9e78807e541a08f43abc6",
+            "id": "component-AddEditOfferComponent-baa35820623e10d30b360dd9a421ad0c",
             "file": "src/app/components/add-edit-offer/add-edit-offer.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1655,7 +1655,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Offer } from './../../models/offer.model';\nimport { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';\nimport { Observable } from 'rxjs';\nimport { Router, ActivatedRoute } from '@angular/router';\nimport { AppState, selectAuthState } from 'src/app/store/app.states';\nimport { Store } from '@ngrx/store';\nimport { OfferService } from 'src/app/services/offer.service';\nimport { UpdateOffer, GetOffer, AddOffer } from 'src/app/offer-store/actions/offer.actions';\n\n@Component({\n  selector: 'app-add-edit-offer',\n  templateUrl: './add-edit-offer.component.html',\n  styleUrls: ['./add-edit-offer.component.scss']\n})\nexport class AddEditOfferComponent implements OnInit {\n  addForm: FormGroup;\n  offer: Offer = new Offer();\n  getState: Observable<any>;\n  offerId: any;\n  showUpdate: boolean;\n  oldOffer: Offer;\n\n  constructor(private router: Router, private route: ActivatedRoute, private offerService: OfferService,\n    // tslint:disable-next-line: align\n    private store: Store<AppState>) {\n    this.getState = this.store.select(selectAuthState);\n  }\n  ngOnInit(): void {\n    if (this.route.snapshot.params && this.route.snapshot.params.offerId) {\n      this.offerId = this.route.snapshot.params.offerId;\n      this.offerService.getOfferById(this.offerId).subscribe((data: Offer) => {\n        this.oldOffer = data;\n        this.addEditForm(this.oldOffer);\n      });\n      this.addEditForm(this.oldOffer);\n    }\n    this.addEditForm(this.offer);\n    this.store.subscribe((data) => {\n      if (data) {\n        if (data.offer.success) {\n          this.addForm.reset();\n        }\n      }\n      this.route.data.subscribe((params) => {\n        if (params && params.isUpdate) {\n          this.showUpdate = params.isUpdate;\n        } else {\n          this.showUpdate = false;\n        }\n      });\n    });\n  }\n\n  private addEditForm(oldOffer?: Offer): void {\n    if (oldOffer) {\n      this.addForm = new FormGroup({\n        id: new FormControl(oldOffer.id),\n        title: new FormControl(oldOffer.title),\n        category: new FormControl(oldOffer.category),\n      });\n    } else {\n      this.addForm = new FormGroup({\n        id: new FormControl(''),\n        title: new FormControl(''),\n        category: new FormControl(''),\n      });\n    }\n  }\n\n  navigateToAddorEdit(): void {\n    if (this.showUpdate) {\n      const payload = {\n        index: this.offerId,\n        newOffer: this.addForm.value,\n      };\n      this.store.dispatch(new UpdateOffer(payload));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    } else {\n      this.store.dispatch(new AddOffer(this.addForm.value));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    }\n  }\n\n}\n",
+            "sourceCode": "import { Offer } from './../../models/offer.model';\nimport { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';\nimport { Observable } from 'rxjs';\nimport { Router, ActivatedRoute } from '@angular/router';\nimport { AppState, selectAuthState } from 'src/app/store/app.states';\nimport { Store } from '@ngrx/store';\nimport { OfferService } from 'src/app/services/offer.service';\nimport { UpdateOffer, GetOffer, AddOffer } from 'src/app/offer-store/actions/offer.actions';\n\n@Component({\n  selector: 'app-add-edit-offer',\n  templateUrl: './add-edit-offer.component.html',\n  styleUrls: ['./add-edit-offer.component.scss']\n})\nexport class AddEditOfferComponent implements OnInit {\n  addForm: FormGroup;\n  offer: Offer = new Offer();\n  getState: Observable<any>;\n  offerId: any;\n  showUpdate: boolean;\n  oldOffer: Offer;\n\n  constructor(private router: Router, private route: ActivatedRoute, private offerService: OfferService,\n    // tslint:disable-next-line: align\n    private store: Store<AppState>) {\n    this.getState = this.store.select(selectAuthState);\n  }\n  ngOnInit(): void {\n    if (this.route.snapshot.params && this.route.snapshot.params.offerId) {\n      this.offerId = this.route.snapshot.params.offerId;\n      this.offerService.getOfferById(this.offerId).subscribe((data: Offer) => {\n        this.oldOffer = data;\n        this.addEditForm(this.oldOffer);\n      });\n      this.addEditForm(this.oldOffer);\n    }\n    this.addEditForm(this.offer);\n    this.store.subscribe((data) => {\n      if (data && data.offer) {\n        if (data.offer.success) {\n          this.addForm.reset();\n        }\n      }\n      this.route.data.subscribe((params) => {\n        if (params && params.isUpdate) {\n          this.showUpdate = params.isUpdate;\n        } else {\n          this.showUpdate = false;\n        }\n      });\n    });\n  }\n\n  private addEditForm(oldOffer?: Offer): void {\n    if (oldOffer) {\n      this.addForm = new FormGroup({\n        id: new FormControl(oldOffer.id),\n        title: new FormControl(oldOffer.title),\n        category: new FormControl(oldOffer.category),\n      });\n    } else {\n      this.addForm = new FormGroup({\n        id: new FormControl(''),\n        title: new FormControl(''),\n        category: new FormControl(''),\n      });\n    }\n  }\n\n  navigateToAddorEdit(): void {\n    if (this.showUpdate) {\n      const payload = {\n        index: this.offerId,\n        newOffer: this.addForm.value,\n      };\n      this.store.dispatch(new UpdateOffer(payload));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    } else {\n      this.store.dispatch(new AddOffer(this.addForm.value));\n      this.store.dispatch(new GetOffer());\n      this.router.navigate(['/']);\n    }\n  }\n\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -1914,7 +1914,7 @@
         },
         {
             "name": "LandingComponent",
-            "id": "component-LandingComponent-311762bfa707ff26e30eb1cfb8923309",
+            "id": "component-LandingComponent-0905fa5e59020f7d799920ffe125f77a",
             "file": "src/app/components/landing/landing.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -1998,7 +1998,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 49,
+                    "line": 53,
                     "jsdoctags": [
                         {
                             "name": "offer",
@@ -2015,7 +2015,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 44
+                    "line": 48
                 },
                 {
                     "name": "ngOnInit",
@@ -2031,7 +2031,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 54
+                    "line": 58
                 }
             ],
             "hostBindings": [],
@@ -2039,11 +2039,11 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { GetOffer, DeleteOffer } from './../../offer-store/actions/offer.actions';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { LogOut } from '../../store/actions/auth.actions';\nimport { Observable } from 'rxjs';\nimport { Router } from '@angular/router';\nimport { OfferService } from '../../services/offer.service';\nimport { Offer } from 'src/app/models/offer.model';\n\n@Component({\n  selector: 'app-landing',\n  templateUrl: './landing.component.html',\n  styleUrls: ['./landing.component.scss']\n})\nexport class LandingComponent implements OnInit {\n  getState: Observable<any>;\n  isAuthenticated: false;\n  user = null;\n  errorMessage = null;\n  offers: Offer[];\n  offer: Offer = new Offer();\n  isDarktheme: boolean;\n\n  constructor(private store: Store<AppState>\n  ) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit() {\n    this.getState.subscribe((state) => {\n      this.isAuthenticated = state.isAuthenticated;\n      this.user = state.user;\n      this.errorMessage = state.errorMessage;\n    });\n\n    this.store.dispatch(new GetOffer());\n    this.store.subscribe(data => {\n      this.offers = data.offer.offer;\n    });\n  }\n\n  logOut(): void {\n    // tslint:disable-next-line: new-parens\n    this.store.dispatch(new LogOut);\n  }\n\n  deleteOffer(offer: Offer): void {\n    this.store.dispatch(new DeleteOffer(offer.id));\n    this.store.dispatch(new GetOffer());\n  }\n\n  toggleTheme(): void {\n    this.isDarktheme = !this.isDarktheme;\n  }\n}\n",
+            "sourceCode": "import { GetOffer, DeleteOffer } from './../../offer-store/actions/offer.actions';\nimport { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { LogOut } from '../../store/actions/auth.actions';\nimport { Observable } from 'rxjs';\nimport { Router } from '@angular/router';\nimport { OfferService } from '../../services/offer.service';\nimport { Offer } from 'src/app/models/offer.model';\n\n@Component({\n  selector: 'app-landing',\n  templateUrl: './landing.component.html',\n  styleUrls: ['./landing.component.scss']\n})\nexport class LandingComponent implements OnInit {\n  getState: Observable<any>;\n  isAuthenticated: false;\n  user = null;\n  errorMessage = null;\n  offers: Offer[];\n  offer: Offer = new Offer();\n  isDarktheme: boolean;\n\n  constructor(private store: Store<AppState>\n  ) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit(): void {\n    this.getState.subscribe((state) => {\n      if (state && state.isAuthenticated) {\n        this.isAuthenticated = state.isAuthenticated;\n        this.user = state.user;\n        this.errorMessage = state.errorMessage;\n      }\n    });\n\n    this.store.dispatch(new GetOffer());\n    this.store.subscribe(data => {\n      if (data && data.offer) {\n        this.offers = data.offer.offer;\n      }\n    });\n  }\n\n  logOut(): void {\n    // tslint:disable-next-line: new-parens\n    this.store.dispatch(new LogOut);\n  }\n\n  deleteOffer(offer: Offer): void {\n    this.store.dispatch(new DeleteOffer(offer.id));\n    this.store.dispatch(new GetOffer());\n  }\n\n  toggleTheme(): void {\n    this.isDarktheme = !this.isDarktheme;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ".logindiv {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.toggleButton {\r\n    margin-left: 48%;\r\n}",
+                    "data": ".logindiv {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n}\r\n\r\n.toggleButton {\r\n    margin-left: 48%;\r\n}\r\n\r\n#logout {\r\n    float: right;\r\n}\r\n\r\n.header {\r\n    overflow: hidden;\r\n}\r\n\r\nh2 {\r\n    margin: 15px 0px 5px 25px !important;\r\n    font-size: 25px;\r\n}\r\n\r\n.addButton {\r\n    margin: 0% 0% 1% 71%;\r\n    vertical-align: top;\r\n}",
                     "styleUrl": "./landing.component.scss"
                 }
             ],
@@ -2071,11 +2071,11 @@
             "implements": [
                 "OnInit"
             ],
-            "templateData": "<div>\n    <div [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n        <h1>Shopping Offers</h1>\n        <h5>Welcome to the world of offers!</h5>\n        <button class=\"action-button toggleButton\" (click)=\"toggleTheme()\">Toggle Theme</button>\n        <hr><br>\n        <div *ngIf=\"isAuthenticated; then doSomething; else doSomethingElse;\"></div>\n        <ng-template #doSomething>\n            <p>You logged in <em>{{user.email}}!</em></p>\n            <button tabindex=\"4\" aria-label=\"Logout\" class=\"action-button\" (click)=\"logOut()\">Log out</button>\n        </ng-template>\n        <ng-template #doSomethingElse>\n            <div class=\"logindiv\">\n                <button tabindex=\"1\" aria-label=\"Login\" [routerLink]=\"['/login']\" class=\"action-button\">Log\n                    In</button>\n                <button tabindex=\"2\" aria-label=\"Register\" [routerLink]=\"['/register']\" class=\"action-button\">Register</button>\n            </div>\n        </ng-template>\n    </div>\n\n    <div class=\"offer-container\">\n        <h2> Offer Details</h2>\n        <button tabindex=\"3\" aria-label=\"AddOffer\" class=\"action-button\" *ngIf=\"isAuthenticated\" [routerLink]=\"['add-offer']\">Add Offer</button>\n        <table class=\"table table-striped\" id=\"offerTable\" [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n            <thead>\n                <tr>\n                    <th>Id</th>\n                    <th>Title</th>\n                    <th>Category</th>\n                    <th *ngIf=\"isAuthenticated\">Action</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let offer of offers\">\n                    <td tabindex=\"0\">{{offer.id}}</td>\n                    <td tabindex=\"0\">{{offer.title}}</td>\n                    <td tabindex=\"0\">{{offer.category}}</td>\n                    <td *ngIf=\"isAuthenticated\">\n                        <button tabindex=\"0\" aria-label=\"Edit\" class=\"action-button\" [routerLink]=\"['/offers/', offer.id, 'edit-offer']\">\n                            Edit</button>\n                        <button tabindex=\"0\" aria-label=\"Delete\" class=\"action-button\" (click)=\"deleteOffer(offer)\">\n                            Delete</button>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n    </div>\n\n</div>"
+            "templateData": "<div [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n    <header class=\"header\">\n        <h1>Shopping Offers</h1>\n        <h5>Welcome to the world of offers!</h5>\n        <button class=\"action-button toggleButton\" (click)=\"toggleTheme()\">Toggle Theme</button>\n        <hr><br>\n        <div *ngIf=\"isAuthenticated; then doSomething; else doSomethingElse;\"></div>\n        <ng-template #doSomething>\n            <p id=\"logout\">You logged in <em>{{user.email}}!</em></p>\n            <button id=\"logout\" tabindex=\"4\" aria-label=\"Logout\" class=\"action-button\" (click)=\"logOut()\">Log\n                out</button>\n        </ng-template>\n        <ng-template #doSomethingElse>\n            <div class=\"logindiv\">\n                <button tabindex=\"1\" aria-label=\"Login\" [routerLink]=\"['/login']\" class=\"action-button\">Log\n                    In</button>\n                <button tabindex=\"2\" aria-label=\"Register\" [routerLink]=\"['/register']\" class=\"action-button\">Register</button>\n            </div>\n        </ng-template>\n    </header>\n</div>\n\n<div class=\"offer-container\">\n    <span>\n        <h2> Offer Details</h2>\n        <button [ngClass]=\"isDarktheme ? 'dark' : 'light'\" tabindex=\"3\" aria-label=\"AddOffer\"\n            class=\"action-button addButton\" *ngIf=\"isAuthenticated\" [routerLink]=\"['add-offer']\">Add Offer</button>\n    </span>\n    <table class=\"table table-striped\" id=\"offerTable\" [ngClass]=\"isDarktheme ? 'dark' : 'light'\">\n        <thead>\n            <tr>\n                <th>Id</th>\n                <th>Title</th>\n                <th>Category</th>\n                <th *ngIf=\"isAuthenticated\">Action</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr *ngFor=\"let offer of offers\">\n                <td tabindex=\"0\">{{offer.id}}</td>\n                <td tabindex=\"0\">{{offer.title}}</td>\n                <td tabindex=\"0\">{{offer.category}}</td>\n                <td *ngIf=\"isAuthenticated\">\n                    <button tabindex=\"0\" aria-label=\"Edit\" class=\"action-button\" [routerLink]=\"['/offers/', offer.id, 'edit-offer']\">\n                        Edit</button>\n                    <button tabindex=\"0\" aria-label=\"Delete\" class=\"action-button\" (click)=\"deleteOffer(offer)\">\n                        Delete</button>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n</div>"
         },
         {
             "name": "LoginComponent",
-            "id": "component-LoginComponent-c99f3728f2006e6c7e4685fd0df49ef7",
+            "id": "component-LoginComponent-371dc9e0c4fbffc0df11647a5d129d32",
             "file": "src/app/components/login/login.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -2138,7 +2138,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 42
+                    "line": 44
                 },
                 {
                     "name": "loginOrRegister",
@@ -2146,7 +2146,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 49
+                    "line": 51
                 },
                 {
                     "name": "ngOnInit",
@@ -2162,7 +2162,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { User } from '../../models/user';\nimport { LogIn, Register } from '../../store/actions/auth.actions';\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { Observable } from 'rxjs';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { FormGroup, FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent implements OnInit {\n  user: User = new User();\n  getState: Observable<any>;\n  errorMessage: string | null;\n  showLogin: boolean;\n  loginRegisterForm: FormGroup;\n\n  constructor(private route: ActivatedRoute, private store: Store<AppState>, private router: Router) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit(): void {\n    this.createLoginRegister();\n    this.getState.subscribe((state) => {\n      this.errorMessage = state.errorMessage;\n    });\n    this.errorMessage = null;\n    this.route.data.subscribe((params) => {\n      if (params && params.isLogin) {\n        this.showLogin = params.isLogin;\n      } else {\n        this.showLogin = false;\n      }\n    });\n  }\n\n  createLoginRegister(): void {\n    this.loginRegisterForm = new FormGroup({\n      email: new FormControl(''),\n      password: new FormControl(''),\n    });\n  }\n\n  loginOrRegister(): void {\n    if (this.showLogin) {\n      this.store.dispatch(new LogIn(this.user));\n    } else {\n      this.store.dispatch(new Register(this.user));\n    }\n  }\n}\n",
+            "sourceCode": "import { Component, OnInit } from '@angular/core';\nimport { Store } from '@ngrx/store';\n\nimport { User } from '../../models/user';\nimport { LogIn, Register } from '../../store/actions/auth.actions';\nimport { AppState, selectAuthState } from '../../store/app.states';\nimport { Observable } from 'rxjs';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { FormGroup, FormControl } from '@angular/forms';\n\n@Component({\n  selector: 'app-login',\n  templateUrl: './login.component.html',\n  styleUrls: ['./login.component.scss']\n})\nexport class LoginComponent implements OnInit {\n  user: User = new User();\n  getState: Observable<any>;\n  errorMessage: string | null;\n  showLogin: boolean;\n  loginRegisterForm: FormGroup;\n\n  constructor(private route: ActivatedRoute, private store: Store<AppState>, private router: Router) {\n    this.getState = this.store.select(selectAuthState);\n  }\n\n  ngOnInit(): void {\n    this.createLoginRegister();\n    this.getState.subscribe((state) => {\n      if (state && state.errorMessage) {\n        this.errorMessage = state.errorMessage;\n      }\n    });\n    this.errorMessage = null;\n    this.route.data.subscribe((params) => {\n      if (params && params.isLogin) {\n        this.showLogin = params.isLogin;\n      } else {\n        this.showLogin = false;\n      }\n    });\n  }\n\n  createLoginRegister(): void {\n    this.loginRegisterForm = new FormGroup({\n      email: new FormControl(''),\n      password: new FormControl(''),\n    });\n  }\n\n  loginOrRegister(): void {\n    if (this.showLogin) {\n      this.store.dispatch(new LogIn(this.user));\n    } else {\n      this.store.dispatch(new Register(this.user));\n    }\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
@@ -2391,6 +2391,14 @@
                 "defaultValue": "'[Offer] Add Success'"
             },
             {
+                "name": "AddEdit",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/addEdit.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
                 "name": "DELETE_OFFER",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
@@ -2410,17 +2418,17 @@
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.prod.ts",
+                "file": "src/environments/environment.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: true\n}"
+                "defaultValue": "{\n  production: false,\n  baseURL: 'http://localhost:3000/',\n}"
             },
             {
                 "name": "environment",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/environments/environment.ts",
+                "file": "src/environments/environment.prod.ts",
                 "type": "object",
-                "defaultValue": "{\n  production: false,\n  baseURL: 'http://localhost:3000/',\n}"
+                "defaultValue": "{\n  production: true\n}"
             },
             {
                 "name": "GET_OFFER",
@@ -2445,6 +2453,14 @@
                 "file": "src/app/store/reducers/auth.reducers.ts",
                 "type": "State",
                 "defaultValue": "{\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n}"
+            },
+            {
+                "name": "Landing",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/landing.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
             },
             {
                 "name": "Large",
@@ -2554,6 +2570,14 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/addEdit.stories.ts",
+                "type": "Story<AddEditOfferComponent>",
+                "defaultValue": "(args: AddEditOfferComponent) => ({\r\n    component: AddEditOfferComponent,\r\n    template: `<app-add-edit-offer></app-add-edit-offer>`,\r\n    styles: ['../app/components/add-edit/add-edit-offer.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [StoreModule.forRoot({ offer: offer.reducer }), RouterTestingModule.withRoutes([]),\r\n            FormsModule, ReactiveFormsModule, HttpClientModule],\r\n        declarations: [AddEditOfferComponent],\r\n        providers: [provideMockStore({}), OfferService],\r\n    },\r\n    props: args,\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Button.stories.ts",
                 "type": "Story<Button>",
                 "defaultValue": "(args: Button) => ({\n  component: Button,\n  props: args,\n})"
@@ -2570,9 +2594,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/landing.stories.ts",
+                "type": "Story<LandingComponent>",
+                "defaultValue": "(args: LandingComponent) => ({\r\n    component: LandingComponent,\r\n    template: `<app-landing></app-landing>`,\r\n    styles: ['../app/components/Landing/Landing.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [RouterTestingModule.withRoutes([]), FormsModule, ReactiveFormsModule],\r\n        declarations: [LandingComponent],\r\n        providers: [provideMockStore({})],\r\n    },\r\n    props: args,\r\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/login.stories.ts",
                 "type": "Story<LoginComponent>",
-                "defaultValue": "() => ({\r\n    component: LoginComponent,\r\n    template: '<app-login></app-login>',\r\n    moduleMetadata: {\r\n        imports: [],\r\n        declarations: [],\r\n        providers: []\r\n    }\r\n})"
+                "defaultValue": "(args: LoginComponent) => ({\r\n    component: LoginComponent,\r\n    template: `<app-login></app-login>`,\r\n    styles: ['../app/components/login/login.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [RouterTestingModule.withRoutes([]), FormsModule, ReactiveFormsModule],\r\n        declarations: [LoginComponent],\r\n        providers: [provideMockStore({})],\r\n    },\r\n    props: args,\r\n})"
             },
             {
                 "name": "Template",
@@ -2791,14 +2823,22 @@
                     "defaultValue": "'[Offer] Update Success'"
                 }
             ],
-            "src/environments/environment.prod.ts": [
+            "src/stories/addEdit.stories.ts": [
                 {
-                    "name": "environment",
+                    "name": "AddEdit",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/environments/environment.prod.ts",
-                    "type": "object",
-                    "defaultValue": "{\n  production: true\n}"
+                    "file": "src/stories/addEdit.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/addEdit.stories.ts",
+                    "type": "Story<AddEditOfferComponent>",
+                    "defaultValue": "(args: AddEditOfferComponent) => ({\r\n    component: AddEditOfferComponent,\r\n    template: `<app-add-edit-offer></app-add-edit-offer>`,\r\n    styles: ['../app/components/add-edit/add-edit-offer.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [StoreModule.forRoot({ offer: offer.reducer }), RouterTestingModule.withRoutes([]),\r\n            FormsModule, ReactiveFormsModule, HttpClientModule],\r\n        declarations: [AddEditOfferComponent],\r\n        providers: [provideMockStore({}), OfferService],\r\n    },\r\n    props: args,\r\n})"
                 }
             ],
             "src/environments/environment.ts": [
@@ -2809,6 +2849,16 @@
                     "file": "src/environments/environment.ts",
                     "type": "object",
                     "defaultValue": "{\n  production: false,\n  baseURL: 'http://localhost:3000/',\n}"
+                }
+            ],
+            "src/environments/environment.prod.ts": [
+                {
+                    "name": "environment",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/environments/environment.prod.ts",
+                    "type": "object",
+                    "defaultValue": "{\n  production: true\n}"
                 }
             ],
             "src/app/offer-store/reducers/offer.reducers.ts": [
@@ -2829,6 +2879,24 @@
                     "file": "src/app/store/reducers/auth.reducers.ts",
                     "type": "State",
                     "defaultValue": "{\r\n    isAuthenticated: false,\r\n    user: null,\r\n    errorMessage: null\r\n}"
+                }
+            ],
+            "src/stories/landing.stories.ts": [
+                {
+                    "name": "Landing",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/landing.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/landing.stories.ts",
+                    "type": "Story<LandingComponent>",
+                    "defaultValue": "(args: LandingComponent) => ({\r\n    component: LandingComponent,\r\n    template: `<app-landing></app-landing>`,\r\n    styles: ['../app/components/Landing/Landing.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [RouterTestingModule.withRoutes([]), FormsModule, ReactiveFormsModule],\r\n        declarations: [LandingComponent],\r\n        providers: [provideMockStore({})],\r\n    },\r\n    props: args,\r\n})"
                 }
             ],
             "src/stories/Button.stories.ts": [
@@ -2940,7 +3008,7 @@
                     "subtype": "variable",
                     "file": "src/stories/login.stories.ts",
                     "type": "Story<LoginComponent>",
-                    "defaultValue": "() => ({\r\n    component: LoginComponent,\r\n    template: '<app-login></app-login>',\r\n    moduleMetadata: {\r\n        imports: [],\r\n        declarations: [],\r\n        providers: []\r\n    }\r\n})"
+                    "defaultValue": "(args: LoginComponent) => ({\r\n    component: LoginComponent,\r\n    template: `<app-login></app-login>`,\r\n    styles: ['../app/components/login/login.component.scss'],\r\n    moduleMetadata: {\r\n        imports: [RouterTestingModule.withRoutes([]), FormsModule, ReactiveFormsModule],\r\n        declarations: [LoginComponent],\r\n        providers: [provideMockStore({})],\r\n    },\r\n    props: args,\r\n})"
                 }
             ],
             "src/app/store/app.states.ts": [
@@ -3695,6 +3763,26 @@
                 "status": "low"
             },
             {
+                "filePath": "src/stories/addEdit.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "AddEdit",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/addEdit.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/button.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -3710,6 +3798,26 @@
                 "name": "HeaderComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/5",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/landing.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Landing",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/landing.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
                 "status": "low"
             },
             {
